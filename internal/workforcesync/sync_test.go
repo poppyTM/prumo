@@ -132,3 +132,58 @@ func TestWorkforceSyncOfflineErrorWhenUncached(t *testing.T) {
 		t.Fatalf("expected error in offline mode when skill not in cache, got nil")
 	}
 }
+
+func TestWorkforceSyncFullPackageAndAgentsRecipes(t *testing.T) {
+	tempProject := t.TempDir()
+	tempHome := t.TempDir()
+	repoRoot, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatalf("failed to get repo root: %v", err)
+	}
+
+	service := workforcesync.NewService()
+	opts := workforcesync.Options{
+		ProjectRoot:   tempProject,
+		HomeDir:       tempHome,
+		RepoRoot:      repoRoot,
+		Version:       "0.5.1",
+		OfflineOnly:   true,
+		TargetSkills:  []string{"clean-code"},
+		TargetAgents:  []string{"architect"},
+		TargetRecipes: []string{"bug-fix"},
+	}
+
+	result, err := service.Sync(opts)
+	if err != nil {
+		t.Fatalf("Sync failed: %v", err)
+	}
+
+	// Verify skill package subdirectories copied
+	skillRefDir := filepath.Join(tempProject, ".ai", "skills", "clean-code", "references")
+	if info, err := os.Stat(skillRefDir); err != nil || !info.IsDir() {
+		t.Fatalf("expected clean-code references/ directory: %v", err)
+	}
+
+	// Verify agent installed
+	agentMD := filepath.Join(tempProject, ".ai", "agents", "architect", "AGENT.md")
+	if _, err := os.Stat(agentMD); err != nil {
+		t.Fatalf("expected architect AGENT.md: %v", err)
+	}
+
+	// Verify recipe installed
+	recipeMD := filepath.Join(tempProject, ".ai", "recipes", "bug-fix", "RECIPE.md")
+	if _, err := os.Stat(recipeMD); err != nil {
+		t.Fatalf("expected bug-fix RECIPE.md: %v", err)
+	}
+
+	// Verify lock entries and checksums
+	if len(result.LockPackages) != 3 {
+		t.Fatalf("expected 3 lock packages, got %d", len(result.LockPackages))
+	}
+
+	for _, lp := range result.LockPackages {
+		if len(lp.Checksum) != 64 {
+			t.Errorf("expected 64-char sha256 checksum for %s (%s), got: %s", lp.ID, lp.Type, lp.Checksum)
+		}
+	}
+}

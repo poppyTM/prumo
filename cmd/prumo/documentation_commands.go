@@ -21,7 +21,7 @@ import (
 
 func runDocumentation(asJSON bool, args []string) int {
 	if len(args) < 2 || args[0] != "docs" {
-		fmt.Fprintln(os.Stderr, "error: expected docs <contracts|profiles|audit|readiness|impact|delta|contradictions|authority|agents>")
+		fmt.Fprintln(os.Stderr, "error: expected docs <contracts|profiles|audit|readiness|impact|delta|contradictions|authority|agents|adr|scaffold-brief|generate-workforce>")
 		return exitUsage
 	}
 	root := "."
@@ -257,6 +257,18 @@ func runDocumentation(asJSON bool, args []string) int {
 		if !report.OK {
 			exitCode = exitValidation
 		}
+	case "adr":
+		adrResult, code := runDocsADR(asJSON, args, root)
+		result = adrResult
+		exitCode = code
+	case "scaffold-brief":
+		briefResult, code := runDocsScaffoldBrief(asJSON, args, root)
+		result = briefResult
+		exitCode = code
+	case "generate-workforce":
+		wfResult, code := runDocsGenerateWorkforce(asJSON, root)
+		result = wfResult
+		exitCode = code
 	default:
 		fmt.Fprintf(os.Stderr, "error: unsupported docs command: %s\n", args[1])
 		return exitUsage

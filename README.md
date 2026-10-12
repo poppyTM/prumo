@@ -146,8 +146,12 @@ prumo run --path ./my-project
 | `prumo compile` | Compile provider-neutral rules to harness adapters |
 | `prumo doctor` | Deep repository and harness health diagnostics |
 | `prumo validate` | Validate repository state against JSON Schemas |
+| `prumo recipe` | Manage and run deterministic recipe DAGs (`list`, `show`, `scaffold`, `pack`, `run`) |
+| `prumo workforce` | Synchronize, scaffold, inspect, and lint skills and agents (`sync`, `list`, `scaffold`, `inspect`, `lint`) |
 | `prumo agent` | Launch interactive Prumo Agent TUI (alias: `prumo tui`) |
 | `prumo native` | Launch Prumo IDE desktop GUI |
+| `prumo docs adr` | Manage Architectural Decision Records (`new`, `list`) |
+| `prumo docs generate-workforce` | Generate canonical workforce documentation from catalog |
 | `prumo docs audit` | Audit documentation authority, drift, and links |
 | `prumo docs authority` | Validate authority map and routing integrity |
 

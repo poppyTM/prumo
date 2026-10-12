@@ -206,6 +206,8 @@ func run(args []string) int {
 		return runPlatform(asJSON, rest)
 	case "workforce":
 		return runWorkforce(asJSON, home, rest[1:])
+	case "recipe", "recipes":
+		return runRecipe(asJSON, rest[1:])
 	case "setup":
 		return runSetup(asJSON, home)
 	case "install":
