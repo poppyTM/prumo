@@ -82,10 +82,22 @@ func TestCommandReferenceIsCheckedAgainstCLISources(t *testing.T) {
 	if len(findings) != 0 {
 		t.Fatalf("real CLI command must resolve: %#v", findings)
 	}
+	findingsHyphen := ValidateReferences(root, []Referencer{
+		{Target: "gate", Text: "Run `prumo docs generate-workforce` before review."},
+	})
+	if len(findingsHyphen) != 0 {
+		t.Fatalf("real hyphenated CLI command must resolve: %#v", findingsHyphen)
+	}
 	stale := ValidateReferences(root, []Referencer{
 		{Target: "gate", Text: "Run `prumo docs teleport` before review."},
 	})
 	if len(stale) != 1 {
 		t.Fatalf("invented CLI command must be a finding: %#v", stale)
+	}
+	staleHyphen := ValidateReferences(root, []Referencer{
+		{Target: "gate", Text: "Run `prumo docs teleport-warp` before review."},
+	})
+	if len(staleHyphen) != 1 {
+		t.Fatalf("invented hyphenated CLI command must be a finding: %#v", staleHyphen)
 	}
 }

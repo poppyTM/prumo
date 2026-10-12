@@ -6,33 +6,37 @@ As **Receitas** no Prumo são sequências operacionais padronizadas que orquestr
 
 | Receita | Descrição | Agentes Envolvidos |
 |---|---|---|
-| **`architecture-change`** | Alteração estrutural ou de dependências com redação prévia de ADR e auditoria de contratos. | `architect`, `quality-reviewer` |
-| **`brand-creation`** | Criação completa de identidade de marca: estética, logo SVG, paleta OKLCH, tipografia fluida e manual. | `creative-director`, `brand-designer`, `svg-artist` |
-| **`bug-fix`** | Correção de defeito orientada a evidências (reprodução determinística com teste falho antes da correção). | `debugger`, `implementer`, `tester` |
-| **`compiler-change`** | Evolução de sintaxe, AST ou regras de compilação com verificação diferencial de paridade. | `compiler-engineer`, `tester` |
-| **`compiler-conformance`** | Execução de suítes exaustivas de conformidade e testes contra baselines canônicos. | `compiler-engineer`, `release-verifier` |
-| **`design-system-foundation`** | Arquitetura de design system: tokens W3C DTCG, paletas OKLCH, componentes atômicos e styleguide vivo. | `design-system-engineer`, `ui-component-engineer`, `accessibility-reviewer` |
-| **`documentation-refactor`** | Atualização de documentação canônica, auditoria de autoridade e mitigação de drifts. | `documentation-maintainer`, `reviewer` |
-| **`engine-renderer`** | Modificações no subsistema de renderização gráfica, shaders ou loop principal. | `engine-engineer`, `renderer-engineer` |
-| **`feature-standard`** | Implementação de funcionalidade padrão com Metas, Planos, testes e documentação. | `architect`, `implementer`, `tester` |
-| **`github-issue`** | Ciclo completo de resolução de issue de GitHub: triagem, plano, implementação e PR. | `issue-triager`, `implementer`, `reviewer` |
-| **`icon-library-creation`** | Produção e engenharia de biblioteca de ícones: grid canônico, otimização de paths SVG e empacotamento. | `svg-artist`, `design-system-engineer`, `accessibility-reviewer` |
-| **`marketing-campaign`** | Esteira de campanhas publicitárias com metodologia AIDA: criativos multiformato e landing view responsiva. | `creative-director`, `advertising-designer`, `frontend-engineer` |
-| **`multiplayer-feature`** | Desenvolvimento de mecânica em rede com tratamento de sincronização e latência. | `networking-engineer`, `tester` |
-| **`project-bootstrap`** | Inicialização canônica de repositório, configuração de perfis e primeiras Metas. | `architect`, `devops-engineer` |
-| **`release`** | Verificação formal de pré-requisitos de release, changelog, tags e geração de binários. | `release-verifier`, `security-reviewer` |
-| **`security-audit-release`** | Auditoria formal de segurança prévia ao lançamento com checagem de privilégios. | `security-architect`, `security-reviewer` |
-| **`security-review`** | Revisão periódica de superfícies de ataque, dependências e isolamento de segredos. | `security-reviewer`, `isolation-auditor` |
-| **`ui-feature`** | Construção de componentes de interface com design tokens e revisão de usabilidade. | `ui-component-engineer`, `ux-architect` |
-| **`ui-review`** | Auditoria visual, testes de responsividade e conformidade de acessibilidade (WCAG). | `accessibility-reviewer`, `visual-identity-auditor` |
-| **`web-feature`** | Implementação de serviço web, endpoints REST/HTTP e validação de payloads. | `backend-engineer`, `frontend-engineer` |
+| **`architecture-change`** | Safely modify system boundaries, public contracts, and ADRs with staged execution. | `explorer`, `architect`, `implementer`, `tester`, `reviewer` |
+| **`brand-creation`** | End-to-end brand identity engineering: market positioning, aesthetic definition, vector logo marks, OKLCH color tokenization, typography systems, and brand guidelines manual. | `creative-director`, `brand-designer`, `svg-artist`, `visual-identity-auditor` |
+| **`bug-fix`** | Reproduce, isolate, and repair defects without masking regressions. | `debugger`, `tester`, `reviewer` |
+| **`compiler-change`** | Safely modify parsing, IR, AST, or runtime behavior with conformance test validation. | `architect`, `compiler-engineer`, `tester`, `reviewer` |
+| **`compiler-conformance`** | Execute end-to-end verification of compiler passes, type systems, SSA lowering, bytecode VM, and grammar fuzzing. | `architect`, `compiler-engineer`, `systems-architect`, `tester`, `reviewer` |
+| **`design-system-foundation`** | Comprehensive engineering of an enterprise design system: W3C DTCG tokens, perceptual color spaces, modular typography, atomic primitives, and automated accessibility verification. | `creative-director`, `brand-designer`, `design-system-engineer`, `ui-component-engineer`, `accessibility-reviewer` |
+| **`documentation-refactor`** | Reorganize canonical docs, docs/PRUMO.md navigation, and audience split without document proliferation. | `explorer`, `documentation-maintainer`, `reviewer` |
+| **`engine-renderer`** | Safely modify GPU, 2D/3D pipelines, and shader systems with visual fixture verification. | `explorer`, `renderer-engineer`, `tester`, `reviewer` |
+| **`feature-standard`** | Default multi-agent implementation flow for ordinary product and feature work with independent cross-model review. | `explorer`, `architect`, `implementer`, `tester`, `reviewer`, `documentation-maintainer` |
+| **`github-issue`** | Standardized issue authoring, refinement, and triaging with Goal linkage. | `explorer`, `issue-triager`, `issue-author` |
+| **`icon-library-creation`** | End-to-end icon library production pipeline: geometric grid standards, optical weight balance, SVG path optimization, accessibility metadata, and framework component generation. | `svg-artist`, `design-system-engineer`, `accessibility-reviewer`, `tester` |
+| **`marketing-campaign`** | Execution pipeline for multi-channel marketing campaigns using the AIDA framework: value proposition, advertising creatives, landing view architecture, and conversion optimization. | `creative-director`, `advertising-designer`, `frontend-engineer`, `quality-reviewer` |
+| **`multiplayer-feature`** | Implement authoritative replication and network protocols with packet loss simulation. | `networking-engineer`, `tester`, `security-reviewer` |
+| **`project-bootstrap`** | Initialize Prumo configuration, schema validation, and minimal workforce for a new repository. | `explorer`, `architect`, `implementer`, `tester` |
+| **`release`** | Produce, verify, and audit release artifacts across target matrices. | `architect`, `release-verifier`, `tester`, `security-reviewer` |
+| **`security-audit-release`** | Execute comprehensive secure-by-design verification covering threat models, authorization matrices, multi-tenant isolation, memory safety sanitizers, and supply chain attestations. | `security-architect`, `security-reviewer`, `isolation-auditor`, `release-verifier` |
+| **`security-review`** | Threat-model, audit, and remediate security-sensitive features. | `security-architect`, `security-reviewer`, `implementer` |
+| **`ui-feature`** | End-to-end design, tokenization, implementation, and accessibility audit of UI features. | `design-researcher`, `ux-architect`, `design-system-engineer`, `frontend-engineer`, `accessibility-reviewer` |
+| **`ui-review`** | Review user interface ergonomics, visual fidelity, and accessibility standards. | `ux-architect`, `accessibility-reviewer`, `reviewer` |
+| **`web-feature`** | Implement fullstack web features across frontend components and backend API endpoints. | `backend-engineer`, `frontend-engineer`, `tester`, `reviewer` |
 
-## Como Executar uma Receita
+## Como Operar Receitas via CLI Canônico
 
 ```bash
-# Executar a receita de bug-fix para um caso específico
-prumo run --recipe bug-fix --param issue=142
+# Listar todas as receitas catalogadas e seus passos
+prumo recipe list
 
-# Executar a esteira de verificação de release
-prumo run --recipe release --param version=0.6.0
+# Inspecionar os detalhes, dependências e gates de uma receita
+prumo recipe show bug-fix
+
+# Executar a receita determinística com o motor DAG
+prumo recipe run bug-fix
+prumo run --recipe bug-fix
 ```

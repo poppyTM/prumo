@@ -310,8 +310,8 @@ func ValidateWorkforce(repoRoot string) []string {
 				out = append(out, fmt.Sprintf("%s package %s is missing %s", strings.Title(strings.TrimSuffix(check.kind, "s")), entry.Name(), check.manifest))
 				continue
 			}
-			if _, err := os.Stat(filepath.Join(packageDir, check.document)); err != nil && check.kind == "skills" {
-				out = append(out, fmt.Sprintf("Skill package %s is missing SKILL.md", entry.Name()))
+			if _, err := os.Stat(filepath.Join(packageDir, check.document)); err != nil {
+				out = append(out, fmt.Sprintf("%s package %s is missing %s", strings.Title(strings.TrimSuffix(check.kind, "s")), entry.Name(), check.document))
 			}
 			for _, message := range validation.ValidateFile(manifest, check.schema, filepath.Join(repoRoot, "schemas")) {
 				out = append(out, fmt.Sprintf("%s %s: %s", strings.Title(strings.TrimSuffix(check.kind, "s")), entry.Name(), message))

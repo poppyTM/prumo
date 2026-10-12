@@ -26,6 +26,9 @@ func runRuntime(asJSON bool, args []string) int {
 			id = args[i+1]
 			i++
 		}
+		if args[i] == "--recipe" && i+1 < len(args) {
+			return runRecipe(asJSON, append([]string{"run", args[i+1]}, args[i+2:]...))
+		}
 	}
 	path := filepath.Join(root, ".prumo", "runtime", "continuation.json")
 	switch args[0] {

@@ -1,53 +1,210 @@
-# Catálogo de Skills de Precisão (189 Skills)
+# Catálogo de Habilidades da Workforce (189 Skills)
 
-As **Skills** no Prumo são módulos de procedimento canônicos, estruturados com pré-condições, ferramentas permitidas, limites operacionais e critérios verificáveis de conclusão.
+As **Skills** no Prumo são módulos de conhecimento operacional empacotados conforme a especificação canônica Skill Package v3 (Capítulo 21).
 
-## Como Funcionam as Skills
+## Habilidades Catalogadas
 
-Cada skill do catálogo define:
-1. **Intenção Precisa**: Um propósito inequívoco (ex: refatoração de AST, criação de paleta de cores acessível, auditoria de lockfile).
-2. **Contexto Requerido**: O subconjunto mínimo de arquivos que o agente deve examinar (princípio Lean Progressive Context).
-3. **Restrições de Execução**: Quais ferramentas ACI podem ser invocadas.
-4. **Critério de Saída (Done Definition)**: O teste ou evidência que comprova o sucesso da operação.
+| Skill | Propósito | Nível de Risco | Modos Suportados |
+|---|---|---|---|
+| **`accessibility`** | Enforce WCAG 2.2 AA standards across all UI components and views. | Medium | testing, review |
+| **`acp-security`** | Verify Agent Client Protocol transport security, authentication tokens, and channel isolation. | High | implementation, review, audit, testing, documentation |
+| **`advertising-design`** | Apply the AIDA model (Attention, Interest, Desire, Action), visual persuasion principles, layout composition for advertising, and conversion-optimized design patterns to create effective advertising materials across digital and print media. | Low | design, review, audit, documentation |
+| **`aesthetic-analysis`** | Analyze, evaluate, and recommend digital aesthetic movements (Flat Design, Material, Neumorphism, Glassmorphism, Neubrutalism, Human Design) based on brand alignment, accessibility implications, technical feasibility, and target audience cultural context. | Low | research, design, review, audit |
+| **`agentic-workflow-design`** | Design multi-agent recipes with explicit roles, state transitions, handoff contracts, coordination topologies, idempotency rules, and capped delegation depth for predictable agent teamwork. | Medium | design, review, implementation |
+| **`api-contract-testing`** | Verify REST, GraphQL, and gRPC contracts with schema validation, Pact consumer-driven tests, breaking-change detection, mock servers, and can-i-deploy release gates. | Low | testing, review |
+| **`api-security`** | Enforce rate limiting, parameter validation, schema compliance, and authorization on API endpoints. | High | implementation, review, audit, testing, documentation |
+| **`applied-mathematics-dsp`** | Execute numerical computations, quaternion geometry, and Fast Fourier Transforms for graphics, audio, and CAD. | Low | implementation, testing, review |
+| **`architecture-quality`** | Verify dependency direction, prevent architectural cycles, eliminate god modules, and enforce boundary separation. | Medium | design, review |
+| **`asset-pipeline`** | Implement asset loaders, hot reloading, compression, and texture baking. | Low | implementation |
+| **`asset-reference-research`** | Gather legally usable game-asset references and placeholders with complete licensing metadata: source sweeps, license matrices, placeholder-to-final mapping, and shippable attribution packs. | Low | research, design, documentation |
+| **`ast-transformation`** | Design, implement, and audit automated AST and CST transformations, codemods, macro expansions, and syntactic desugaring with strict idempotence. | Medium | implementation, review, audit, testing |
+| **`audio-engineering`** | Implement positional 3D audio, streaming playback, and DSP mixing. | Low | implementation |
+| **`auth-security`** | Audit and enforce robust authentication, session management, and RBAC/ABAC models. | High | implementation, review, audit, testing, documentation |
+| **`backend-api`** | Design, implement, and harden versioned service endpoints (REST, GraphQL, gRPC) with explicit contracts, authentication, idempotency, pagination, rate limiting, and observable p95 latency SLOs. | Medium | implementation, review, testing, documentation |
+| **`benchmarking`** | Design and execute deterministic, statistically sound performance benchmarks with warmup discipline, percentile reporting, and confidence-gated regression detection so performance claims are evidence, not anecdotes. | Medium | testing, review, audit, implementation |
+| **`binary-security-mitigations`** | Enforce Control Flow Integrity (CFI), Stack Canaries, SafeStack, RELRO, and ASLR compliance on compiled artifacts. | High | audit, release, review |
+| **`brand-identity`** | Design, document, and govern brand identity systems including responsive logo architecture, color palette governance, typography selection, imagery style, iconography conventions, voice and tone guidelines, and cross-touchpoint consistency auditing. | Medium | design, review, audit, documentation |
+| **`bytecode-vm-architecture`** | Design stack and register-based virtual machines, direct threaded dispatch loops, and bytecode verifiers. | High | implementation, testing, review |
+| **`caching`** | Architect, implement, and audit multi-tiered caching systems (L1 in-process, L2 distributed, L3 edge/CDN) with strict consistency guarantees, deterministic invalidation protocols, mathematical eviction models (LRU, LFU, W-TinyLFU), singleflight deduplication, and robust defenses against cache stampede, penetration, breakdown, and avalanche. | Medium | implementation, review, audit, testing |
+| **`ci-cd`** | Design, implement, and audit CI/CD pipelines so every validation is reproducible from a clean checkout, with hermetic dependencies, safe caching, fail-fast contract gates, and secret-free logs. | Medium | implementation, review, audit, testing |
+| **`clang-context-indexing`** | Build and query code-context indexes for C/C++ repositories using Clang libclang and clangd: compilation-database-driven symbol extraction, incremental reindexing on header-closure changes, and a ranked symbol/reference/call-graph query API for AI agents. | Low | implementation, research, testing |
+| **`clean-code`** | Enforce pragmatic Clean Code: domain naming, function single-responsibility, cohesion & coupling metrics, anti-premature abstraction, and smell elimination. | Medium | implementation, review, audit |
+| **`code-quality`** | Audit cyclomatic and cognitive complexity, code duplication, and maintainability metrics across polyglot codebases with deterministic static analysis gates, and produce prioritized remediation plans with before/after evidence. | Low | review, audit, testing |
+| **`code-review`** | Perform independent, evidence-based code reviews with severity-graded findings, deterministic verdicts, and mandatory re-verification of fixes. | Low | review, audit |
+| **`cognitive-clarity`** | Enforce explicit, unambiguous, low-cognitive-load communication and structured technical execution tailored for neurodivergent collaboration. | Low | implementation, review, research, design, documentation |
+| **`color-science`** | Design, generate, validate, and govern perceptually uniform color palettes using OKLCH/OKLAB color spaces, programmatic scale generation algorithms, WCAG 2.2 and APCA contrast verification, wide-gamut (P3) support, and multi-theme color token architecture. | Low | design, implementation, review, audit |
+| **`competitor-analysis`** | Analyze competitor interfaces, workflows, and ergonomics to identify opportunities. | Low | research |
+| **`compiler-development`** | Engineer programming language compilers, resilient Pratt parsers, arena-allocated ASTs, bidirectional type checkers, SSA IR optimizers, and ABI-compliant backends. | High | implementation, review, audit, research, design, testing |
+| **`compiler-frontend-engineering`** | Design and implement lexing, parsing (Pratt, LR, PEG), AST/CST construction, and robust error recovery. | Medium | implementation, testing, review |
+| **`compiler-ir-optimization`** | Transform AST into SSA form, compute dominance frontiers, and perform dead code elimination, GVN, and vectorization. | High | implementation, review, testing |
+| **`component-specification`** | Specify component props, variants, keyboard accessibility, and state contracts. | Low | design, documentation |
+| **`computational-chemistry-materials`** | Simulate material optical properties (complex refractive index, Fresnel, microfacets) and molecular potential interactions. | Low | implementation, research, review |
+| **`computational-physics`** | Model rigid and soft body physics using symplectic integrators (Verlet, RK4) and GJK/EPA continuous collision. | Medium | implementation, testing, review |
+| **`concurrency-quality`** | Enforce provable correctness, data race freedom, deadlock prevention, bounded resource allocation, and predictable throughput across concurrent systems. | Medium | implementation, review, audit, testing |
+| **`containers`** | Build small, reproducible container images with multi-stage builds, pinned digests, non-root execution, explicit health checks, minimal attack surface, and verified SBOM provenance. | Medium | implementation, review, audit, design |
+| **`context-optimization`** | Reduce token consumption of already-loaded context without losing task-critical information through deduplication, relevance pruning, lossless summarization of verbose payloads, and cache-directive annotations. | Medium | implementation, review, audit |
+| **`contrast`** | Verify, audit, and mathematically validate color contrast ratios across all user interfaces, graphical components, and interactive states conforming to WCAG 2.2 Level AA/AAA and APCA. | Medium | audit, testing, review, implementation |
+| **`database-review`** | Review and harden relational schemas, migrations, indexes, constraints, transactions, and query plans using EXPLAIN ANALYZE evidence and reversible zero-downtime migration discipline. | High | review, audit, implementation |
+| **`dependency-management`** | Manage dependency surface, verify provenance, pin versions, and audit transitive security advisories. | Medium | audit, implementation |
+| **`design-critique`** | Conduct structured design critiques using objective evaluation frameworks, actionable feedback protocols, criteria-based scoring, and documented improvement recommendations that separate craft improvement from stakeholder approval. | Low | review, audit, documentation |
+| **`design-psychology`** | Apply empirical cognitive science principles (Hick's Law, Fitts's Law, Miller's Law, Gestalt, Cognitive Load Theory, Von Restorff, Serial Position, Doherty Threshold) to audit, optimize, and validate user interface decision architecture and information processing efficiency. | Low | review, audit, design, documentation |
+| **`design-research`** | Analyze market references and translate them into reusable design evidence. | Low | research |
+| **`design-system`** | Define, engineer, and govern token-driven, accessible UI component systems with polymorphic API contracts and multi-theme support. | Low | implementation, review, audit, testing, documentation, design |
+| **`design-tokens`** | Design, maintain, validate, and compile cross-platform design tokens adhering to W3C DTCG 2025.10 with 3-tier hierarchy, automated WCAG 2.2 contrast checking, and multi-theme aliasing. | Medium | implementation, design, review, audit |
+| **`desktop-security`** | Enforce IPC validation, native protocol safety, auto-update verification, and desktop sandbox isolation. | High | implementation, review |
+| **`documentation`** | Maintain canonical Markdown documentation for users, developers, and operators with explicit ownership, authority roles, drift detection against code, link integrity, and versioned publishing. | Low | documentation, review, audit, design |
+| **`documentation-for-llms`** | Author and maintain Markdown documentation optimized for LLM retrieval and coding-assistant consumption through progressive disclosure, stable anchors, llms.txt indexes, frontmatter metadata, and chunk-size discipline. | Low | documentation, review, design |
+| **`documentation-publishing`** | Build, version, and publish unified documentation sites from canonical Markdown sources with single-source builds, public/internal view separation, link validation, versioned releases, and redirect management. | Low | documentation, release, review |
+| **`editor-tooling`** | Implement desktop engine editors, scene inspectors, and gizmo overlays. | Low | implementation |
+| **`error-handling`** | Implement consistent error taxonomies, robust propagation, actionable diagnostic messages, and contextual error handling. | Medium | implementation, review |
+| **`filesystem-security`** | Enforce path traversal prevention, symlink resolution checks, file permission masks, and safe temporary file handling. | High | implementation, review, audit, testing, documentation |
+| **`focus-management`** | Enforce programmatic focus management, modal focus traps, focus restoration upon overlay dismissal, initial focus positioning, and SPA route transition announcements. | Medium | implementation, review, testing |
+| **`frontend-web`** | Build accessible, performant browser interfaces with semantic HTML, full keyboard operability, WCAG 2.2 AA conformance, resilient data fetching, and Lighthouse scores of 90 or above. | Medium | implementation, review, testing |
+| **`fuzz-grammar-testing`** | Execute coverage-guided and grammar-based fuzzing on parsers, decoders, and compilers using libFuzzer and AFL++. | High | testing, audit |
+| **`game-engine-architecture`** | Design modular engine subsystems, memory layout, and tick cycles. | Medium | implementation, review, audit, testing, documentation |
+| **`game-runtime`** | Implement main loop, fixed timestep, state updates, and scene management. | Medium | implementation |
+| **`game-ui-testing`** | Verify game user interfaces across controller, keyboard, and touch input: deterministic focus navigation, safe-area compliance on all target resolutions, localization robustness, and correct UI state transitions under real frame-timing conditions. | Low | testing, review |
+| **`generative-svg-art`** | Create algorithmically generated SVG artwork using procedural techniques (flow fields, L-systems, Voronoi, noise functions, fractals), SVG filter chains (feTurbulence, feDisplacementMap), parametric design systems, and creative coding frameworks for unique, reproducible visual assets. | Low | implementation, design, research |
+| **`git-workflow`** | Keep changes isolated, reviewable, and traceable with focused branches or worktrees, small conventional commits, secret-free history, and pull requests carrying test evidence and acceptance mapping. | Low | implementation, review, audit |
+| **`github-ci-debug`** | Diagnose and fix GitHub Actions workflow failures, matrix mismatches, and flaky pipeline steps. | Medium | implementation, testing |
+| **`github-issue-create`** | Author structured, actionable, evidence-linked GitHub issues with objective acceptance criteria. | Low | implementation, review, audit, testing, documentation |
+| **`github-issue-refine`** | Refine existing issues by clarifying acceptance criteria, technical dependencies, and milestones. | Low | implementation, review |
+| **`github-issue-triage`** | Classify incoming issues, detect duplicates, assign milestones, and link to roadmap Goals. | Low | implementation, review, audit, testing, documentation |
+| **`github-pr-create`** | Author pull requests with structured descriptions, evidence links, and breaking change disclosures. | Low | implementation, review, audit, testing, documentation |
+| **`github-pr-feedback`** | Address and resolve reviewer comments with minimal targeted changes and test evidence. | Low | implementation |
+| **`github-pr-review`** | Perform thorough automated and manual code review on pull requests. | Low | implementation, review, audit, testing, documentation |
+| **`github-release`** | Draft release notes, generate changelog deltas, and attach verified release assets. | Medium | documentation, implementation |
+| **`github-repository`** | Manage repository settings, branch protections, secrets, and environment configurations. | Medium | implementation |
+| **`goal-management`** | Author and manage Prumo Goals with measurable acceptance criteria, phased execution plans, evidence linkage, and lock discipline so scope stays explicit and locked criteria are never silently weakened. | Low | implementation, design, review, audit |
+| **`grounded-implementation`** | Enforce grounded implementation discipline: inspect reality before claiming existence, never invent APIs/symbols, and fail closed when authority is missing. | High | implementation, review |
+| **`icon-system`** | Design, govern, and distribute icon libraries with consistent grid specifications, optical alignment, stroke/fill conventions, naming taxonomy, accessibility classification, semantic versioning, and multi-platform distribution (NPM, Figma, component libraries). | Low | design, implementation, review, audit, documentation |
+| **`implementation-reality-verification`** | Differentiate presence vs reachability vs exercise vs verification; eliminate false-green illusions where dead code passes superficial tests. | High | testing, review |
+| **`information-architecture`** | Design screen hierarchy, taxonomy, navigation trees, and progressive disclosure flows. | Low | design |
+| **`input-handling`** | Implement multi-device input mapping, action buffering, and gamepad support. | Low | implementation |
+| **`interaction-design`** | Define, choreograph, and audit human-computer interaction behaviors, micro-interactions, Fitts's Law ergonomics, feedback latency budgets, and accessible motion curves. | Low | design, review, audit, implementation |
+| **`interaction-research`** | Plan, conduct, analyze, and synthesize empirical user experience research, usability testing protocols, and standardized metrics (SUS, SEQ, Completion Rate). | Low | research, review, audit, design |
+| **`keyboard-accessibility`** | Enforce WCAG 2.2 keyboard navigation, ARIA APG roving tabindex patterns, visible focus indicators (>= 3:1 contrast), and zero keyboard traps. | Medium | implementation, review, testing |
+| **`lang-asm`** | Enforce x86/x86-64 and ARM64 ABI compliance, 16-byte stack alignment, CFI unwind directives, non-executable stacks, and CET hardening. | Critical | implementation, review, audit, testing |
+| **`lang-bash`** | Enforce Bash strict error propagation (set -euo pipefail), total parameter quoting hygiene, trap-driven resource cleanup, atomic locking, and zero-eval security discipline. | Medium | implementation, review, audit, testing, release |
+| **`lang-c`** | Enforce ISO C (C11/C17/C23) bounded buffers, zero banned legacy string APIs, strict aliasing, immediate allocation checks, and ASan/UBSan memory verification. | Critical | implementation, review, testing, audit |
+| **`lang-c3`** | Enforce C3 semantic safety, explicit defer and catch-defer resource cleanup, slices over raw pointers, contract annotations (@pure/@require/@ensure), and fault handling. | High | implementation, review, audit, testing |
+| **`lang-cpp`** | Enforce modern C++ (C++20/C++23) standards, RAII ownership, zero raw pointer bugs, sanitizers, static analysis, and non-negotiable memory safety. | Critical | implementation, review, testing, audit |
+| **`lang-csharp`** | Enforce modern C# (.NET 8/9), nullable reference types (#nullable enable), Span<T> memory efficiency, async cancellation tokens, and Stryker mutation testing. | High | implementation, review, testing |
+| **`lang-css`** | Enforce modern CSS design token binding, CSS cascade layers (@layer), nesting, container queries, zero unreviewed !important, and layout containment to eliminate layout thrashing. | Medium | implementation, review, testing |
+| **`lang-d`** | Enforce Dlang @safe by default, DIP1000 scope pointer checking, @nogc optimization, and pure functional immutability. | Critical | implementation, review, testing |
+| **`lang-dart`** | Enforce Dart sound null safety, strict type analyzer options, async streams discipline, and isolate isolation for CPU-intensive tasks. | Medium | implementation, review, testing |
+| **`lang-dockerfile`** | Enforce Dockerfile multi-stage builds, non-root execution (USER directive), immutable digest/version pinning, minimal base images (distroless/alpine), zero secret leakage, and Hadolint compliance. | High | implementation, review, testing |
+| **`lang-elixir`** | Enforce Elixir OTP behaviors (GenServer, Supervisor), immutable functional architecture, property-based testing via StreamData, and fault-tolerant supervision trees. | Medium | implementation, review, testing |
+| **`lang-glsl`** | Enforce GLSL shader compilation validation (glslangValidator), explicit precision qualifiers, branching optimization, NaN/Inf protection, and uniform buffer layout consistency. | High | implementation, review, testing |
+| **`lang-go`** | Enforce Go (1.22+) explicit error handling (%w/errors.Is/errors.As), context cancellation propagation, goroutine lifecycle ownership, -race detector verification, sync.Pool recycling, and table-driven tests. | High | implementation, review, testing |
+| **`lang-graphql`** | Enforce GraphQL schema-first design, strict nullability discipline, query complexity/depth analysis, DataLoader batching to eliminate N+1 queries, and field-level authorization. | High | implementation, review, testing |
+| **`lang-hlsl`** | Enforce modern HLSL (Shader Model 6.x), explicit register and space bindings, constant buffer packing alignment, DXC validation, and wave intrinsics safety. | High | implementation, review, testing |
+| **`lang-html`** | Enforce semantic HTML5 document structures, WCAG 2.1 AA/AAA accessibility by construction, zero inline scripting, strict Content Security Policy compliance, and safe DOM boundaries. | Medium | implementation, review, testing |
+| **`lang-java`** | Enforce Java 21+ LTS standards, records for immutable data, sealed interfaces, Loom virtual thread discipline, NullAway static analysis, and ArchUnit architecture tests. | High | implementation, review, testing |
+| **`lang-javascript`** | Enforce modern ECMAScript (ES2024+) standards, native ESM, event loop microtask hygiene, AbortController cancellation, prototype pollution defense, and memory leak prevention. | Medium | implementation, review, testing, audit |
+| **`lang-json`** | Enforce strict RFC 8259 JSON compliance, JSON Schema contract validation, numeric precision limits (IEEE 754 64-bit float safety), canonical serialization, and zero comments/trailing commas. | Low | implementation, review, testing |
+| **`lang-kotlin`** | Enforce Kotlin structured concurrency, coroutines cancellation discipline, sound null-safety (prohibit !! operator), immutable data collections, and Arrow functional contracts. | High | implementation, review, testing |
+| **`lang-lua`** | Enforce Lua 5.4/LuaJIT scope discipline, strict global variable protection, sandboxed environment execution, and type annotations via EmmyLua/Teal. | Medium | implementation, review, testing |
+| **`lang-odin`** | Enforce Odin explicit context management, tracking allocator leak detection, distinct domain types, and cache-coherent #soa layouts. | Critical | implementation, review, audit, testing |
+| **`lang-php`** | Enforce PHP 8.2+, declare(strict_types=1), PHPStan at maximum level, prepared PDO queries, and strict input validation. | Medium | implementation, review, testing |
+| **`lang-python`** | Enforce Python 3.12+ strict typing (mypy --strict), immutable data models (dataclasses slots), structured asyncio concurrency (TaskGroup), zero bare exceptions, and ruff code hygiene. | Medium | implementation, review, testing, audit |
+| **`lang-ruby`** | Enforce modern Ruby 3.3+, gradual typing via RBS/Sorbet, RuboCop strict profile, mutation testing via Mutant, and memory leak prevention. | Medium | implementation, review, testing |
+| **`lang-rust`** | Enforce safe Rust by default (#![forbid(unsafe_code)]), zero unhandled unwrap/expect in production, miri verification of unsafe boundaries, and clippy -D warnings. | Critical | implementation, review, testing, audit |
+| **`lang-sql`** | Enforce explicit SQL dialect semantics (PostgreSQL, MySQL, SQLite, SQL Server), zero string concatenation, mandatory parameterization, explicit projection (prohibit SELECT * in production), transactional isolation, and index-backed query plans. | High | implementation, review, testing |
+| **`lang-swift`** | Enforce Swift 6 strict concurrency, Actor isolation, Sendable boundary checks, value semantics by default, and quarantine of UnsafePointer operations. | High | implementation, review, testing |
+| **`lang-terraform`** | Enforce Terraform / HCL immutable infrastructure, remote state locking, least-privilege IAM policies, variable type constraints, checkov/tfsec static security scanning, and plan-as-evidence verification. | High | implementation, review, testing |
+| **`lang-typescript`** | Enforce TypeScript 5.x+ strict mode, zero 'any', branded domain types, exhaustive discriminated unions with never checks, and runtime boundary schema validation. | Medium | implementation, review, testing, audit |
+| **`lang-wgsl`** | Enforce W3C WebGPU Shading Language (WGSL) standards, 16-byte struct alignment, explicit address spaces, workgroupBarrier synchronization, and naga validation. | High | implementation, review, testing |
+| **`lang-yaml`** | Enforce YAML schema validation (JSON Schema / Kubeconform), safe parsing (prohibit arbitrary object instantiation), explicit typing, duplicate key rejection, and secret scrubbing. | Medium | implementation, review, testing |
+| **`lang-zig`** | Enforce Zig explicit allocator passing, error union handling, defer/errdefer resource safety, comptime type invariants, and leak-free memory discipline. | Critical | implementation, review, audit, testing |
+| **`language-tooling`** | Integrate, configure, and verify LSP and DAP language tooling: JSON-RPC lifecycle, capability negotiation, semantic queries, diagnostics, formatting, code actions, and debug sessions with measured latency budgets. | Medium | implementation, design, testing, documentation |
+| **`layout-patterns`** | Design, specify, and validate spatial composition using grid systems, layout primitives (Stack, Cluster, Sidebar, Switcher, Cover, Center, Grid, Frame, Reel), responsive strategies (container queries, fluid design), scanning patterns (F/Z/Gutenberg), and spacing token architecture. | Low | design, implementation, review, audit |
+| **`lean-progressive-context`** | Select the smallest sufficient context for a task under strict token budgets through staged loading, a running token ledger, sufficiency testing per layer, and Working Context Capsule handoffs. | Low | research, implementation, review |
+| **`linux-kernel-isolation`** | Enforce process sandboxing and isolation via seccomp-BPF, Landlock LSM, cgroups v2, and Linux namespaces. | High | implementation, audit, testing |
+| **`marketing-collateral`** | Design, specify, and govern marketing collateral materials (social media graphics, email templates, landing pages, banners, brochures, pitch decks, infographics) with brand consistency, funnel alignment, and multi-channel asset management. | Low | design, review, audit, documentation |
+| **`mcp-integration`** | Expose semantic, bounded tools and resources over Model Context Protocol: well-named tools with JSON Schema I/O, paginated resources, typed error envelopes, and least-privilege scopes, never arbitrary shell or unrestricted filesystem access by default. | Medium | implementation, review |
+| **`mcp-security`** | Verify Model Context Protocol server trust boundaries, tool parameter sanitization, and output validation. | High | implementation, review, audit, testing, documentation |
+| **`mcp-tooling`** | Develop and integrate Model Context Protocol servers and client toolkits: scaffold spec-compliant servers, implement stdio and Streamable HTTP transports, build client session handling with version negotiation, and prove conformance with the protocol test battery. | Medium | implementation, testing |
+| **`memory-management`** | Design, implement, and verify custom memory allocators (Arenas, Pools, Slabs), cache line alignment (false sharing prevention), and ASan/Valgrind memory safety. | Critical | implementation, review, testing, audit |
+| **`memory-safety-sanitizers`** | Verify C/C++/Rust native code against UAF, buffer overflows, data races, and leaks using ASan, MSan, TSan, and UBSan. | High | testing, review, audit |
+| **`motion-accessibility`** | Design, implement, and audit animations, transitions, and motion effects conforming to WCAG 2.2 SC 2.3.1 (Three Flashes) and SC 2.3.3 (Animation from Interactions) with prefers-reduced-motion ergonomics. | Medium | implementation, review, testing, audit |
+| **`motion-library`** | Design, implement, and govern reusable motion primitives using spring physics, cubic Bézier easing, semantic animation tokens, choreography rules, reduced-motion accessibility patterns, and GPU-optimized performance targeting 60fps. | Low | design, implementation, review, audit |
+| **`multiplayer-networking`** | Implement and audit server-authoritative multiplayer replication with client-side prediction and reconciliation, bandwidth-bounded delta compression, snapshot interpolation, lag compensation, and graceful reconnection over lossy UDP networks. | High | implementation, testing, review |
+| **`network-security`** | Enforce TLS 1.3 encryption, certificate pinning, strict socket timeouts, and firewall rules. | High | implementation, review, audit, testing, documentation |
+| **`network-testing`** | Prove networked systems survive packet loss, latency spikes, jitter, partitions, and reconnect storms using fault injection, jittered backoff, idempotent operations, and measured recovery objectives. | Medium | testing, review, audit |
+| **`observability`** | Implement structured logging, distributed tracing, metrics, correlation IDs, and automated secrets redaction. | Low | implementation, review |
+| **`orchestration-multi-agent`** | Execute multi-agent work as a dependency DAG with isolated workspaces, capped retries and delegation depth, diversified reviewers, and evidence-gated completion decided by CI verdicts. | High | implementation, design, review |
+| **`performance-native`** | Profile and optimize native CPU, GPU, and memory performance: cycle-level hotspots, cache-miss behavior, allocation churn, data-layout efficiency, and GPU pipeline stalls, with every claim backed by profiler captures before and after. | Medium | implementation, testing, review |
+| **`performance-web`** | Measure and improve page performance with Core Web Vitals, Lighthouse budgets, bundle analysis, network waterfalls, and RUM field data, enforcing lab-plus-field gates in CI. | Medium | testing, audit, review |
+| **`physics-collision`** | Implement spatial partitioning, broadphase/narrowphase collision, and rigid body dynamics. | Medium | implementation |
+| **`physics-testing`** | Test 2D/3D physics behavior for correctness and determinism: collision layers and masks, trigger volumes, one-way platforms, joints and constraints, continuous collision detection, and fixed-timestep replay determinism with visual debug verification. | Low | testing, review |
+| **`playtest-automation`** | Drive games with deterministic, replayable input sequences and inspect runtime state as evidence: scripted bot traversals, seeded RNG runs, screenshot and telemetry capture, and crash/hang detection across full playthroughs without human hands on the controller. | Low | testing |
+| **`playwright-ui`** | Automate user-visible web workflows with resilient semantic selectors, isolated fixtures, and cross-browser coverage: end-to-end checkout, auth, and CRUD flows that stay green through refactors and run in sharded CI with trace evidence on every failure. | Low | testing, review |
+| **`plugin-architecture`** | Design and implement sandboxed extension points with versioned contracts and explicit permissions: capability-scoped plugin APIs, semver-guaranteed ABI stability, isolated execution with resource quotas, and safe hot-reload lifecycles for third-party and first-party extensions. | Medium | design, implementation, review |
+| **`plugin-security`** | Enforce capability-based plugin isolation, memory safety boundaries, and manifest permission checks. | High | implementation, review |
+| **`process-execution-security`** | Enforce strict command-line argument array invocation, environment variable sanitization, and child process sandboxing. | High | implementation, review, audit, testing, documentation |
+| **`project-documentation-architect`** | Build and maintain implementation-ready bilingual living project documentation with least-workforce orchestration across GENESIS, ADOPTION, and DELTA modes. | Low | documentation, research, review, audit |
+| **`project-intelligence`** | Record honest task-level cost, effort, quality, and token metrics in a durable intelligence ledger and apply estimate-vs-actual variance to calibrate future planning. | Low | documentation, audit, review |
+| **`prompt-engineering`** | Author, version, and evaluate system prompts and few-shot examples with a pinned eval harness, scored regression gates, and prompt-diff review before rollout or rollback. | Medium | design, testing, review |
+| **`prototyping`** | Create, iterate, and validate UI prototypes across progressive fidelity levels (sketch → wireframe → lo-fi → mid-fi → hi-fi → interactive) with structured feedback loops, user testing integration, and clear handoff to implementation. | Low | design, review, testing |
+| **`prumo-navigation`** | Navigate Prumo project documentation and resolve canonical information fast using the authority order, routing map, and source map. | Low | research, review |
+| **`realtime-audio-dsp`** | Build ultra-low latency, lock-free audio processing graphs with strict zero-allocation in the realtime audio thread. | Medium | implementation, testing, review |
+| **`realtime-synchronization`** | Implement deterministic multiplayer synchronization with fixed tick rates, lockstep or rollback netcode, snapshot interpolation, jitter buffering, and reconnect resync. | High | implementation, review, testing |
+| **`refactoring`** | Safely improve internal code structure without altering external observable behavior. | Medium | implementation |
+| **`release-engineering`** | Cut safe, traceable software releases with SemVer versioning, reproducible signed packaging, checksum verification, bidirectional migration rehearsals, staged rollouts, and rehearsed rollback plans. | High | release, implementation, audit, review |
+| **`rendering-2d`** | Design, implement, and profile high-performance 2D graphics rendering pipelines, dynamic multi-texture quad batching, premultiplied alpha blending, MaxRects texture atlas packing with bleed gutters, and MSDF vector typography. | Medium | implementation, design, testing, audit |
+| **`rendering-3d`** | Design, implement, and profile high-performance 3D graphics rendering pipelines (Forward+, Deferred G-Buffer, Clustered Shading), physically based rendering (PBR Cook-Torrance), and cascaded shadow mapping. | Medium | implementation, design, testing, audit |
+| **`responsive-design`** | Design, implement, and validate responsive strategies using container queries, fluid typography and spacing (clamp/min/max), content-first breakpoints, progressive enhancement, responsive images (srcset/picture), logical properties for internationalization, and WCAG 1.4.10 reflow compliance at 400% zoom. | Low | design, implementation, review, audit, testing |
+| **`roslyn-context-indexing`** | Build and query code-context indexes for C#/.NET solutions with Roslyn: MSBuild workspace loading, semantic-model symbol extraction, reference/implementation search, type-hierarchy expansion, and document-version incremental reindexing. | Low | implementation, research, testing |
+| **`rpc-protocols`** | Design, version, and verify RPC and message protocols with IDLs: Protobuf proto3 modeling, Cap'n Proto schemas, buf breaking-change gates, gRPC error/deadline semantics, streaming patterns, and wire-compatibility proof. | Medium | implementation, design, review, testing |
+| **`runtime-memory-gc`** | Implement custom allocators (arenas, pools, TLSF) and garbage collectors (generational, incremental, concurrent). | High | implementation, testing, review |
+| **`rust-analyzer-context-indexing`** | Build and query code-context indexes for Rust workspaces through rust-analyzer: Cargo metadata crate-graph loading, LSP symbol/hover/definition/reference extraction, flycheck-gated freshness, and ranked bounded query answers. | Low | implementation, research, testing |
+| **`scene-graph`** | Implement entity-component-system (ECS) architectures and spatial transforms. | Medium | implementation |
+| **`screen-reader`** | Enforce Screen Reader compatibility, W3C AccName 1.2 name computation, ARIA live region announcements, and accurate Accessibility Tree role/state/value contracts. | Medium | implementation, review, testing |
+| **`secrets-security`** | Enforce zero hardcoded secrets, automated secret scanning, secure key storage, and runtime credential redaction. | High | implementation, review, audit, testing, documentation |
+| **`secure-coding`** | Prevent vulnerabilities during implementation through safe idioms and input validation. | High | implementation, review |
+| **`security-agent-mcp`** | Audit coding agents, MCP tool manifests, prompt injection vectors, permission drift, and tool shadowing. | Critical | audit, review, testing |
+| **`security-authz-matrix`** | Define and automatically verify fine-grained role-resource-action authorization matrices and cross-tenant boundaries. | High | design, testing, audit |
+| **`security-review`** | Independently audit source code and infrastructure for vulnerability patterns. | High | implementation, review, audit, testing, documentation |
+| **`security-saas-isolation`** | Execute adversarial cross-user and cross-tenant penetration tests across database RLS, caches, queues, and storage. | Critical | testing, audit |
+| **`security-threat-model`** | Map system assets, trust boundaries, attacker capabilities, STRIDE threat matrices, and mitigation requirements. | High | design, review, audit |
+| **`serialization`** | Implement deterministic, versioned binary and data serialization with explicit schema evolution rules, canonical byte output, and fuzz-verified round-trip guarantees. | Medium | implementation, review, testing |
+| **`shaders`** | Author, optimize, cross-compile, and statically validate GPU shaders across modern shading languages (WGSL, HLSL, GLSL, and SPIR-V) with std140/std430 layout safety, warp divergence minimization, and pre-warmed pipeline caches. | Medium | implementation, design, testing, audit |
+| **`state-management`** | Design, engineer, and audit deterministic state architectures using finite state machines, unidirectional data flow, reactive signals, and optimistic transactional rollbacks. | Low | implementation, review, audit, design, testing |
+| **`supply-chain-security`** | Verify package checksums, signatures, lockfile integrity, and malicious dependency detection. | High | implementation, review, audit, testing, documentation |
+| **`surface-protocol-conformance`** | Validate that CLI, TUI, GUI, and daemon share identical domain semantics without bypassing permissions, budgets, or error taxonomy. | High | testing, review |
+| **`svg-engineering`** | Author, optimize, and validate scalable vector graphics with semantic structure, accessibility attributes (title, desc, aria), SVGO automation pipelines, currentColor theming, SVG filters and animation, sprite systems, and procedural SVG generation. | Low | implementation, review, audit, design |
+| **`testing-quality`** | Design and execute deterministic, isolated, and behavior-oriented test suites across the testing pyramid. | Low | testing, implementation |
+| **`threat-modeling`** | Enumerate trust boundaries, attack vectors, privilege levels, and abuse cases. | High | design, audit |
+| **`traycer-orchestration`** | Orchestrate AI-assisted build execution with Traycer as a replaceable adapter: canonical repository Goals, traced plan graphs, verification-gated steps, checkpoints with resume, and replayable audit trails. | Medium | implementation, review, audit |
+| **`tree-sitter-context-indexing`** | Build and query language-agnostic code-context indexes with tree-sitter: pinned multi-language parsing, declarative capture queries, syntax-aligned chunking, and incremental re-parsing for AI agent context retrieval. | Low | implementation, research, testing |
+| **`ts-morph-context-indexing`** | Build and query code-context indexes for TypeScript/JavaScript monorepos with ts-morph: tsconfig-bound loading, compiler-backed type and module graph extraction, reference/implementation search, and incremental file-level refresh. | Low | implementation, research, testing |
+| **`type-system-theory`** | Specify and verify type systems, Hindley-Milner inference, subtyping, and ownership/affine type rules. | High | design, implementation, review |
+| **`typography-system`** | Design, specify, and validate systematic typographic hierarchies using modular scales, fluid sizing (clamp()), variable font axis configuration, OpenType feature selection, vertical rhythm enforcement, and DTCG-compliant typography tokens. | Low | design, implementation, review, audit |
+| **`ui-implementation`** | Implement reusable, token-bound design system components across Web and Native, enforcing a 19-point state matrix, responsive layouts, and accessibility. | Medium | implementation, review, design |
+| **`ui-ux-review`** | Conduct structured heuristic evaluations, cognitive walkthroughs, and interaction audits using the Nielsen Norman 10 heuristics and 0-4 severity scoring. | Low | review, audit, design, testing |
+| **`untrusted-project-security`** | Safely inspect, analyze, and operate within third-party or untrusted repositories without executing arbitrary code. | High | implementation, review, audit, testing, documentation |
+| **`user-flows`** | Design, map, and audit end-to-end user task journeys, decision forks, edge cases, and error recovery loops using standardized Mermaid state flowcharts. | Low | design, review, audit, documentation |
+| **`ux-architecture`** | Define, architect, and govern product Information Architecture (IA), sitemap hierarchies, wayfinding systems, and content taxonomies. | Low | design, review, audit, documentation |
+| **`visual-communication`** | Apply visual communication theory (hierarchy, semiotics, visual rhetoric, information design) to define message architecture, evaluate iconographic meaning, audit data visualization integrity, and validate cultural appropriateness of visual language across audiences. | Low | design, review, audit, documentation, research |
+| **`visual-qa`** | Inspect, audit, and certify the visual fidelity of implemented user interfaces against canonical design specifications (Figma), 4pt/8pt spatial rhythm, and typography scale. | Low | testing, review, audit, design |
+| **`visual-reference-research`** | Collect and organize visual moodboards, palette references, and layout inspirations. | Low | research |
+| **`visual-regression`** | Capture deterministic visual snapshots and detect unexpected layout shifts, styling regressions, and font mutations across viewports and browsers. | Low | testing, review, audit, implementation |
+| **`web-security`** | Prevent OWASP Top 10 vulnerabilities (XSS, CSRF, Injection, SSRF, Broken Auth). | High | implementation, review, audit, testing, documentation |
+| **`website-forensics`** | Inspect public websites to extract layout, typography, interaction, and styling patterns. | Low | research |
+| **`wireframe-styleguide`** | Standardize graybox design tokens, schematic symbols, component states, and annotation conventions for low-fidelity wireframing. | Low | design, implementation, review, audit, documentation |
+| **`wireframing`** | Author structured markdown and schematic wireframes with interactive region definitions. | Low | implementation, review, audit, testing, documentation, design |
+| **`zoom-reflow`** | Verify layouts reflow without horizontal scroll at 400% zoom (320px viewport) and text resizes up to 200% without clipping or content loss. | Low | testing, audit, review, implementation |
 
-## Grupos Funcionais de Skills
-
-### 🎨 Design, UI/UX, Vetores & Comunicação Visual
-
-- **Design Systems & Tokens**: `design-system-architect`, `design-tokens-specifier`, `color-palette-generator`, `typography-scale-builder`, `spacing-system-designer`, `theme-switcher-implementer`.
-- **Componentização & UI**: `accessible-component-builder`, `form-control-designer`, `data-table-designer`, `modal-dialog-builder`, `toast-notification-system`, `responsive-layout-grid`.
-- **Arte Vetorial, Ícones & SVG**: `svg-icon-author`, `vector-path-optimizer`, `scalable-logo-generator`, `svg-illustration-composer`, `canvas-renderer-adapter`.
-- **Motion & Microinterações**: `css-animation-choreographer`, `motion-physics-easing`, `page-transition-designer`, `skeleton-loader-animator`.
-- **Acessibilidade & Ergonomia**: `wcag-aaa-auditor`, `screen-reader-announcer`, `focus-management-specifier`, `high-contrast-mode-checker`.
-- **Marketing, Marca & Publicidade**: `brand-identity-guideline-author`, `hero-section-copywriter`, `social-share-card-generator`, `conversion-rate-optimizer-designer`.
-
-### ⚙️ Engenharia de Compiladores, Runtimes & Sistemas
-
-- **Análise Léxica & Parsing**: `lexer-tokenizer-builder`, `recursive-descent-parser`, `ast-node-definer`, `syntax-error-reporter`.
-- **Semântica & Tipagem**: `type-inference-solver`, `scope-resolution-analyzer`, `contract-checker-static`, `borrow-checker-emulator`.
-- **Geração de Código & Bytecode**: `bytecode-assembler-emitter`, `virtual-machine-dispatcher`, `js-es2022-transpiler`, `wasm-module-builder`.
-- **Concorrência & Tempo**: `async-await-state-machine`, `cooperative-scheduler-designer`, `virtual-clock-tester`, `channel-mailbox-handler`.
-- **Memória & Performance**: `arena-allocator-engineer`, `memory-leak-hunter`, `cache-locality-optimizer`, `flamegraph-profiler`.
-
-### 🏗️ Arquitetura, Governança & Qualidade
-
-- **Governança & Prumo Protocol**: `goal-lifecycle-manager`, `sha256-integrity-locker`, `plan-dag-validator`, `evidence-collector`, `gate-evaluator`.
-- **Lean Progressive Context (LPC)**: `context-capsule-compiler`, `megaprompt-reducer`, `token-budget-enforcer`, `document-relevance-scorer`.
-- **Testes & Conformance**: `differential-testing-runner`, `fuzz-harness-generator`, `golden-master-comparer`, `flaky-test-eliminator`.
-- **Segurança & Hermeticidade**: `sandbox-boundary-enforcer`, `secret-leak-detector`, `dependency-cve-auditor`, `env-var-isolation-checker`.
-- **Documentação Viva**: `living-book-sync`, `adr-author`, `contradiction-detector`, `authority-drift-checker`.
-
-## Invocando Skills via CLI
-
-As skills podem ser invocadas diretamente no harness ou inspecionadas:
+## Invocando e Inspecionando Skills via CLI
 
 ```bash
-# Listar todas as skills catalogadas
-prumo workforce skills list
+# Listar todas as skills instaladas e core
+prumo workforce list
 
-# Inspecionar os detalhes e ferramentas de uma skill
-prumo workforce skill inspect design-tokens-specifier
+# Inspecionar contrato, checks e templates de uma skill
+prumo workforce inspect skill clean-code
 
-# Executar uma tarefa guiada por skill
-prumo run --skill accessible-component-builder --path ./src/components
+# Sincronizar skills da workforce para o projeto local
+prumo workforce sync
 ```

@@ -208,9 +208,9 @@ func LintSkillContract(skillDir string) []ContractFinding {
 		}
 	}
 
-	// Instructions check (instructions.md or prompt.md)
+	// Instructions check (SKILL.md, instructions.md or prompt.md)
 	instructionsFound := false
-	for _, candidate := range []string{"instructions.md", "INSTRUCTIONS.md", "prompt.md", "skill.md"} {
+	for _, candidate := range []string{"SKILL.md", "skill.md", "instructions.md", "INSTRUCTIONS.md", "prompt.md", "PROMPT.md"} {
 		iPath := filepath.Join(skillDir, candidate)
 		if fi, err := os.Stat(iPath); err == nil && fi.Size() > 0 {
 			instructionsFound = true
@@ -223,7 +223,7 @@ func LintSkillContract(skillDir string) []ContractFinding {
 			Kind:     "skill",
 			Rule:     "instructions_exist",
 			Severity: "error",
-			Message:  "skill directory missing non-empty instructions file (instructions.md)",
+			Message:  "skill directory missing non-empty instructions file (SKILL.md or instructions.md)",
 		})
 	}
 

@@ -37,6 +37,17 @@
         "Staged migration DAG",
         "Verified implementation"
       ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
+      ],
       "stop_conditions": [
         "ADR approved and staged tasks completed"
       ],
@@ -145,16 +156,163 @@
             "review"
           ]
         }
+      ]
+    },
+    {
+      "id": "brand-creation",
+      "name": "Brand Creation \u0026 Identity System",
+      "version": 1,
+      "purpose": "End-to-end brand identity engineering: market positioning, aesthetic definition, vector logo marks, OKLCH color tokenization, typography systems, and brand guidelines manual.",
+      "select": {
+        "features_any": [
+          "branding",
+          "brand-identity",
+          "design-system",
+          "marketing"
+        ]
+      },
+      "inputs": [
+        "Brand brief \u0026 company charter",
+        "Target audience profile",
+        "Market positioning strategy"
       ],
-      "fallbacks": [
+      "agents": [
+        "creative-director",
+        "brand-designer",
+        "svg-artist",
+        "visual-identity-auditor"
+      ],
+      "skills": [
+        "aesthetic-analysis",
+        "visual-communication",
+        "brand-identity",
+        "color-science",
+        "typography-system",
+        "svg-engineering",
+        "design-critique"
+      ],
+      "gates": [
+        "brand-critique",
+        "contrast-audit",
+        "vector-conformance"
+      ],
+      "artifacts": [
+        "Brand Strategy \u0026 Positioning Spec",
+        "OKLCH Color Palette \u0026 Semantic Tokens",
+        "Fluid Typography Scale Spec",
+        "SVG Logo Family (Light, Dark, Monochrome)",
+        "Brand Guidelines Manual"
+      ],
+      "stop_conditions": [
+        "Brand guidelines and vector assets pass critique and contrast audits with zero violations"
+      ],
+      "steps": [
         {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
+          "id": "aesthetic-strategy",
+          "name": "Aesthetic Research \u0026 Semiotic Positioning",
+          "agent_role": "creative-director",
+          "skills": [
+            "aesthetic-analysis",
+            "visual-communication"
+          ],
+          "input": "Brand brief \u0026 company charter",
+          "output": "Aesthetic strategy \u0026 moodboard spec",
+          "required_evidence": [
+            "review"
+          ]
         },
         {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
+          "id": "color-foundation",
+          "name": "OKLCH Color Science \u0026 Accessible Palette Generation",
+          "depends_on": [
+            "aesthetic-strategy"
+          ],
+          "agent_role": "brand-designer",
+          "skills": [
+            "color-science",
+            "brand-identity"
+          ],
+          "input": "Aesthetic strategy",
+          "output": "OKLCH color palette tokens JSON",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "contrast-audit"
+          ]
+        },
+        {
+          "id": "typography-architecture",
+          "name": "Fluid Typography Hierarchy \u0026 Variable Fonts Spec",
+          "depends_on": [
+            "aesthetic-strategy"
+          ],
+          "agent_role": "brand-designer",
+          "skills": [
+            "typography-system",
+            "brand-identity"
+          ],
+          "input": "Aesthetic strategy",
+          "output": "Typography system tokens JSON",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "logo-engineering",
+          "name": "Mathematical SVG Vector Logo \u0026 Mark Crafting",
+          "depends_on": [
+            "color-foundation",
+            "typography-architecture"
+          ],
+          "agent_role": "svg-artist",
+          "skills": [
+            "svg-engineering"
+          ],
+          "input": "Brand tokens and aesthetic direction",
+          "output": "Responsive SVG logo pack",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "vector-conformance"
+          ]
+        },
+        {
+          "id": "guidelines-compilation",
+          "name": "Compile Formal Brand Identity Guidelines",
+          "depends_on": [
+            "logo-engineering"
+          ],
+          "agent_role": "brand-designer",
+          "skills": [
+            "brand-identity",
+            "visual-communication"
+          ],
+          "input": "Vector logo assets and token manifests",
+          "output": "Brand guidelines manual markdown",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "identity-audit",
+          "name": "Comprehensive Visual Identity \u0026 Multi-surface Audit",
+          "depends_on": [
+            "guidelines-compilation"
+          ],
+          "agent_role": "visual-identity-auditor",
+          "skills": [
+            "design-critique"
+          ],
+          "input": "Brand guidelines and vector assets",
+          "output": "Brand audit scorecard and sign-off",
+          "required_evidence": [
+            "review"
+          ],
+          "gates": [
+            "brand-critique"
+          ]
         }
       ]
     },
@@ -190,6 +348,17 @@
         "Regression test",
         "Root-cause repair patch",
         "Review sign-off"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Failing regression test passes after fix and full suite is green"
@@ -264,17 +433,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -283,17 +441,18 @@
       "version": 1,
       "purpose": "Safely modify parsing, IR, AST, or runtime behavior with conformance test validation.",
       "select": {
-        "project_types": [
-          "compiler",
-          "language"
-        ],
         "features_any": [
           "compiler",
           "scripting"
+        ],
+        "project_types": [
+          "compiler",
+          "language"
         ]
       },
-      "requires_skills_any": [
-        "compiler-development"
+      "preconditions": [
+        "Language RFC or specification change proposed",
+        "Existing grammar and conformance test suite available"
       ],
       "inputs": [
         "Language specification / RFC",
@@ -320,6 +479,17 @@
         "Language RFC",
         "AST passes",
         "Conformance test suite"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "100% language conformance test suite pass rate"
@@ -392,7 +562,7 @@
         },
         {
           "id": "review",
-          "name": "Independent review of ABI & backwards compatibility",
+          "name": "Independent review of ABI \u0026 backwards compatibility",
           "depends_on": [
             "test"
           ],
@@ -409,26 +579,11 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
-      ],
-      "preconditions": [
-        "Language RFC or specification change proposed",
-        "Existing grammar and conformance test suite available"
       ]
     },
     {
       "id": "compiler-conformance",
-      "name": "Compiler & Virtual Machine Conformance",
+      "name": "Compiler \u0026 Virtual Machine Conformance",
       "version": 1,
       "purpose": "Execute end-to-end verification of compiler passes, type systems, SSA lowering, bytecode VM, and grammar fuzzing.",
       "preconditions": [
@@ -564,6 +719,148 @@
       ]
     },
     {
+      "id": "design-system-foundation",
+      "name": "Design System Foundation Architecture",
+      "version": 1,
+      "purpose": "Comprehensive engineering of an enterprise design system: W3C DTCG tokens, perceptual color spaces, modular typography, atomic primitives, and automated accessibility verification.",
+      "select": {
+        "features_any": [
+          "design-system",
+          "tokens",
+          "ui-components",
+          "frontend"
+        ]
+      },
+      "inputs": [
+        "Brand vision \u0026 aesthetic guidelines",
+        "Target technology stack \u0026 UI framework",
+        "Accessibility targets (WCAG 2.2 AA / AAA)"
+      ],
+      "agents": [
+        "creative-director",
+        "brand-designer",
+        "design-system-engineer",
+        "ui-component-engineer",
+        "accessibility-reviewer"
+      ],
+      "skills": [
+        "design-system",
+        "design-tokens",
+        "color-science",
+        "typography-system",
+        "component-specification",
+        "ui-implementation",
+        "visual-regression"
+      ],
+      "gates": [
+        "token-validation",
+        "component-test",
+        "wcag-aaa"
+      ],
+      "artifacts": [
+        "W3C DTCG Design Tokens Package (JSON/CSS/SCSS)",
+        "Core Atomic Component Library (Button, Input, Card, Modal)",
+        "Living Styleguide \u0026 Interactive Documentation",
+        "Comprehensive Accessibility \u0026 Conformance Report"
+      ],
+      "stop_conditions": [
+        "Tokens compile cleanly to all target formats, components pass 100% unit and visual tests, and accessibility audit completes with zero critical defects"
+      ],
+      "steps": [
+        {
+          "id": "token-architecture",
+          "name": "Define Multi-Tier W3C Design Tokens",
+          "agent_role": "design-system-engineer",
+          "skills": [
+            "design-tokens",
+            "color-science",
+            "typography-system"
+          ],
+          "input": "Brand aesthetic guidelines",
+          "output": "Global, semantic, and component tokens JSON",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "token-validation"
+          ]
+        },
+        {
+          "id": "primitive-specification",
+          "name": "Specify Atomic UI Component Contracts",
+          "depends_on": [
+            "token-architecture"
+          ],
+          "agent_role": "design-system-engineer",
+          "skills": [
+            "component-specification",
+            "design-system"
+          ],
+          "input": "Semantic tokens",
+          "output": "Component props, states, and variant specifications",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "component-implementation",
+          "name": "Build Headless / Accessible UI Component Primitives",
+          "depends_on": [
+            "primitive-specification"
+          ],
+          "agent_role": "ui-component-engineer",
+          "skills": [
+            "ui-implementation",
+            "clean-code"
+          ],
+          "input": "Component specifications and tokens",
+          "output": "Component source code and test suite",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "component-test"
+          ]
+        },
+        {
+          "id": "living-styleguide",
+          "name": "Author Living Styleguide \u0026 Documentation",
+          "depends_on": [
+            "component-implementation"
+          ],
+          "agent_role": "creative-director",
+          "skills": [
+            "design-system",
+            "visual-communication"
+          ],
+          "input": "Components and token manifests",
+          "output": "Interactive documentation website \u0026 playground",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "accessibility-conformance",
+          "name": "Exhaustive WCAG \u0026 Keyboard Navigation Audit",
+          "depends_on": [
+            "living-styleguide"
+          ],
+          "agent_role": "accessibility-reviewer",
+          "skills": [
+            "visual-regression"
+          ],
+          "input": "Rendered components and documentation views",
+          "output": "WCAG conformance audit report",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "wcag-aaa"
+          ]
+        }
+      ]
+    },
+    {
       "id": "documentation-refactor",
       "name": "Documentation Refactor",
       "version": 1,
@@ -574,10 +871,6 @@
           "ai-assisted-development"
         ]
       },
-      "requires_skills_any": [
-        "documentation-for-llms",
-        "documentation"
-      ],
       "inputs": [
         "Current documentation set",
         "Audience definitions"
@@ -598,6 +891,17 @@
       "artifacts": [
         "Synchronized canonical Markdown",
         "Updated docs/PRUMO.md"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "All documentation links valid and zero redundant files"
@@ -668,17 +972,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -687,20 +980,15 @@
       "version": 1,
       "purpose": "Safely modify GPU, 2D/3D pipelines, and shader systems with visual fixture verification.",
       "select": {
-        "project_types": [
-          "game-engine"
-        ],
         "features_any": [
           "rendering",
           "lighting",
           "postfx"
+        ],
+        "project_types": [
+          "game-engine"
         ]
       },
-      "requires_skills_any": [
-        "rendering-2d",
-        "rendering-3d",
-        "shaders"
-      ],
       "inputs": [
         "Render pipeline spec",
         "Visual baseline fixtures"
@@ -728,6 +1016,17 @@
         "Shader pipelines",
         "Visual regression diffs",
         "GPU frame time benchmarks"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Visual fixtures match and frame timing budget met"
@@ -774,7 +1073,7 @@
             "rendering-2d",
             "shaders"
           ],
-          "input": "Visual fixture & shader spec",
+          "input": "Visual fixture \u0026 shader spec",
           "output": "Shader / pipeline changeset",
           "required_evidence": [
             "test"
@@ -819,17 +1118,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -873,6 +1161,17 @@
         "Review report",
         "Documentation delta"
       ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
+      ],
       "stop_conditions": [
         "Goal acceptance criteria met and verified with evidence",
         "Reviewer approval granted"
@@ -886,7 +1185,7 @@
             "prumo-navigation",
             "lean-progressive-context"
           ],
-          "input": "Active Goal & docs/PRUMO.md",
+          "input": "Active Goal \u0026 docs/PRUMO.md",
           "output": "Impact map and context plan",
           "required_evidence": [
             "review"
@@ -983,17 +1282,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -1007,9 +1295,9 @@
           "issue-tracking"
         ]
       },
-      "requires_skills_any": [
-        "github-issue-create",
-        "github-issue-triage"
+      "preconditions": [
+        "Repository context and active Goals accessible",
+        "Issue tracker permissions available"
       ],
       "inputs": [
         "User request / bug report",
@@ -1031,6 +1319,17 @@
       ],
       "artifacts": [
         "Canonical GitHub issue record"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Issue authored with objective acceptance criteria"
@@ -1092,7 +1391,7 @@
             "github-issue-create",
             "github-issue-refine"
           ],
-          "input": "Classification & scope",
+          "input": "Classification \u0026 scope",
           "output": "Draft issue markdown",
           "required_evidence": [
             "review"
@@ -1117,21 +1416,279 @@
             "review"
           ]
         }
+      ]
+    },
+    {
+      "id": "icon-library-creation",
+      "name": "Icon Library Engineering \u0026 Design System Integration",
+      "version": 1,
+      "purpose": "End-to-end icon library production pipeline: geometric grid standards, optical weight balance, SVG path optimization, accessibility metadata, and framework component generation.",
+      "select": {
+        "features_any": [
+          "iconography",
+          "design-system",
+          "svg",
+          "ui-components"
+        ]
+      },
+      "inputs": [
+        "Iconography taxonomy \u0026 functional requirements",
+        "Base pixel grid spec (e.g. 24x24 px, 2px stroke)",
+        "Target framework bindings (SVG, React, Vue, Web Components)"
       ],
-      "fallbacks": [
+      "agents": [
+        "svg-artist",
+        "design-system-engineer",
+        "accessibility-reviewer",
+        "tester"
+      ],
+      "skills": [
+        "svg-engineering",
+        "icon-system",
+        "design-tokens",
+        "generative-svg-art"
+      ],
+      "gates": [
+        "grid-conformance",
+        "path-optimization",
+        "a11y-audit"
+      ],
+      "artifacts": [
+        "Icon Pixel Grid \u0026 Optical Balance Specification",
+        "Optimized Scalable SVG Asset Bundle",
+        "Typed Component Wrapper Packages (React/Vue/Web Components)",
+        "Icon Metadata \u0026 Search Taxonomy Catalog JSON"
+      ],
+      "stop_conditions": [
+        "All icon glyphs strictly align to base grid, path data is normalized with zero redundant nodes, and accessibility metadata validates"
+      ],
+      "steps": [
         {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
+          "id": "grid-specification",
+          "name": "Establish Geometric Grid \u0026 Optical Alignment Keys",
+          "agent_role": "svg-artist",
+          "skills": [
+            "icon-system"
+          ],
+          "input": "Base pixel grid spec and design language",
+          "output": "Grid geometry and key shape guidelines",
+          "required_evidence": [
+            "review"
+          ]
         },
         {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
+          "id": "vector-crafting",
+          "name": "Vector Path Crafting \u0026 Optical Sizing",
+          "depends_on": [
+            "grid-specification"
+          ],
+          "agent_role": "svg-artist",
+          "skills": [
+            "svg-engineering",
+            "icon-system"
+          ],
+          "input": "Icon taxonomy and grid geometry",
+          "output": "Raw SVG vector icon glyphs",
+          "required_evidence": [
+            "review"
+          ],
+          "gates": [
+            "grid-conformance"
+          ]
+        },
+        {
+          "id": "path-optimization",
+          "name": "Path Simplification \u0026 SVGO Bytecode Optimization",
+          "depends_on": [
+            "vector-crafting"
+          ],
+          "agent_role": "svg-artist",
+          "skills": [
+            "svg-engineering"
+          ],
+          "input": "Raw SVG glyphs",
+          "output": "Normalized, zero-overhead SVG assets",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "path-optimization"
+          ]
+        },
+        {
+          "id": "component-packaging",
+          "name": "Package Typed UI Components \u0026 Token Integration",
+          "depends_on": [
+            "path-optimization"
+          ],
+          "agent_role": "design-system-engineer",
+          "skills": [
+            "design-tokens",
+            "icon-system"
+          ],
+          "input": "Optimized SVGs and design tokens",
+          "output": "Component packages \u0026 metadata catalog",
+          "required_evidence": [
+            "test"
+          ]
+        },
+        {
+          "id": "accessibility-audit",
+          "name": "Audit Accessibility \u0026 Multi-size Visual Conformance",
+          "depends_on": [
+            "component-packaging"
+          ],
+          "agent_role": "accessibility-reviewer",
+          "skills": [
+            "icon-system"
+          ],
+          "input": "Component packages and rendered test matrix",
+          "output": "Iconography a11y audit report",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "a11y-audit"
+          ]
         }
+      ]
+    },
+    {
+      "id": "marketing-campaign",
+      "name": "Marketing \u0026 Advertising Campaign Pipeline",
+      "version": 1,
+      "purpose": "Execution pipeline for multi-channel marketing campaigns using the AIDA framework: value proposition, advertising creatives, landing view architecture, and conversion optimization.",
+      "select": {
+        "features_any": [
+          "marketing",
+          "advertising",
+          "growth",
+          "landing-page"
+        ]
+      },
+      "inputs": [
+        "Campaign brief \u0026 core value proposition",
+        "Target channels \u0026 platform dimensions",
+        "Conversion goals \u0026 key performance indicators"
       ],
-      "preconditions": [
-        "Repository context and active Goals accessible",
-        "Issue tracker permissions available"
+      "agents": [
+        "creative-director",
+        "advertising-designer",
+        "frontend-engineer",
+        "quality-reviewer"
+      ],
+      "skills": [
+        "advertising-design",
+        "marketing-collateral",
+        "layout-patterns",
+        "design-psychology",
+        "responsive-design",
+        "clean-code"
+      ],
+      "gates": [
+        "aida-evaluation",
+        "responsive-check",
+        "accessibility"
+      ],
+      "artifacts": [
+        "Campaign Creative Strategy Spec",
+        "Multi-format Ad Units (Social, Display, Banner)",
+        "Responsive Campaign Landing View",
+        "AIDA Conversion Audit Scorecard"
+      ],
+      "stop_conditions": [
+        "All ad creatives and landing view pass AIDA review, responsiveness audit, and WCAG accessibility standards"
+      ],
+      "steps": [
+        {
+          "id": "campaign-strategy",
+          "name": "AIDA Framing \u0026 Psychological Hook Strategy",
+          "agent_role": "creative-director",
+          "skills": [
+            "design-psychology",
+            "advertising-design"
+          ],
+          "input": "Campaign brief \u0026 value proposition",
+          "output": "Campaign strategy \u0026 copy matrix",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "ad-collateral",
+          "name": "Design Multi-Format Advertising Creatives",
+          "depends_on": [
+            "campaign-strategy"
+          ],
+          "agent_role": "advertising-designer",
+          "skills": [
+            "advertising-design",
+            "marketing-collateral"
+          ],
+          "input": "Campaign strategy \u0026 copy matrix",
+          "output": "Multi-format ad units (SVG, HTML5, CSS)",
+          "required_evidence": [
+            "review"
+          ],
+          "gates": [
+            "aida-evaluation"
+          ]
+        },
+        {
+          "id": "landing-architecture",
+          "name": "Layout Architecture \u0026 Cognitive Hierarchy",
+          "depends_on": [
+            "campaign-strategy"
+          ],
+          "agent_role": "advertising-designer",
+          "skills": [
+            "layout-patterns",
+            "responsive-design"
+          ],
+          "input": "Campaign strategy",
+          "output": "Landing page layout wireframe spec",
+          "required_evidence": [
+            "review"
+          ]
+        },
+        {
+          "id": "landing-implementation",
+          "name": "Implement Responsive High-Conversion Landing View",
+          "depends_on": [
+            "ad-collateral",
+            "landing-architecture"
+          ],
+          "agent_role": "frontend-engineer",
+          "skills": [
+            "responsive-design",
+            "clean-code"
+          ],
+          "input": "Layout wireframe and creative assets",
+          "output": "Production-ready responsive landing view",
+          "required_evidence": [
+            "test"
+          ],
+          "gates": [
+            "responsive-check",
+            "accessibility"
+          ]
+        },
+        {
+          "id": "conversion-qa",
+          "name": "Full Campaign Quality \u0026 Conversion Review",
+          "depends_on": [
+            "landing-implementation"
+          ],
+          "agent_role": "quality-reviewer",
+          "skills": [
+            "clean-code"
+          ],
+          "input": "Landing view and creative assets",
+          "output": "Campaign launch readiness scorecard",
+          "required_evidence": [
+            "review"
+          ]
+        }
       ]
     },
     {
@@ -1145,10 +1702,6 @@
           "networking"
         ]
       },
-      "requires_skills_any": [
-        "multiplayer-networking",
-        "network-testing"
-      ],
       "inputs": [
         "Network protocol spec",
         "Authority architecture"
@@ -1172,6 +1725,17 @@
         "Replication protocol",
         "Network resilience test logs",
         "Security sign-off"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Replication verified under simulated packet loss and jitter"
@@ -1245,17 +1809,6 @@
             "security-scan"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -1288,6 +1841,17 @@
         "docs/PRUMO.md",
         ".ai/ manifests",
         "Initial Goal"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Project initialized and validated with prumo doctor"
@@ -1358,17 +1922,6 @@
             "tests"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -1405,6 +1958,17 @@
         "Release verification scorecard",
         "Checksums",
         "Rollback plan"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "All release gates pass cleanly"
@@ -1463,7 +2027,7 @@
         },
         {
           "id": "security-audit",
-          "name": "Audit release dependencies & CVEs",
+          "name": "Audit release dependencies \u0026 CVEs",
           "depends_on": [
             "test-matrix"
           ],
@@ -1472,7 +2036,7 @@
             "security-review",
             "supply-chain-security"
           ],
-          "input": "Lockfile & packages",
+          "input": "Lockfile \u0026 packages",
           "output": "Security scan report",
           "required_evidence": [
             "security-scan"
@@ -1497,22 +2061,11 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
       "id": "security-audit-release",
-      "name": "Security Audit & Release Gate",
+      "name": "Security Audit \u0026 Release Gate",
       "version": 1,
       "purpose": "Execute comprehensive secure-by-design verification covering threat models, authorization matrices, multi-tenant isolation, memory safety sanitizers, and supply chain attestations.",
       "preconditions": [
@@ -1552,7 +2105,7 @@
         "STRIDE Threat Model",
         "Authorization Matrix Audit",
         "Cross-Tenant Penetration Report",
-        "Sanitizer & Binary Hardening Scorecard",
+        "Sanitizer \u0026 Binary Hardening Scorecard",
         "Signed Release Security Manifest"
       ],
       "stop_conditions": [
@@ -1688,11 +2241,6 @@
           "privacy"
         ]
       },
-      "requires_skills_any": [
-        "threat-modeling",
-        "security-review",
-        "secure-coding"
-      ],
       "preconditions": [
         "Target feature design or implementation available"
       ],
@@ -1720,6 +2268,17 @@
         "Threat model",
         "Security audit report",
         "Remediation verification"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "Zero unresolved high/critical security findings"
@@ -1795,17 +2354,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -1820,12 +2368,9 @@
           "editor"
         ]
       },
-      "requires_skills_any": [
-        "design-research",
-        "ux-architecture",
-        "wireframing",
-        "design-system",
-        "accessibility"
+      "preconditions": [
+        "Product requirement or design spec available",
+        "Design system tokens accessible"
       ],
       "inputs": [
         "Product requirement",
@@ -1859,6 +2404,17 @@
         "Tested UI components",
         "a11y scorecard"
       ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
+      ],
       "stop_conditions": [
         "UI feature implemented, visually tested, and WCAG AA compliant"
       ],
@@ -1889,7 +2445,7 @@
             "information-architecture"
           ],
           "input": "Research findings",
-          "output": "User flow & layout hierarchy",
+          "output": "User flow \u0026 layout hierarchy",
           "required_evidence": [
             "review"
           ]
@@ -1913,7 +2469,7 @@
         },
         {
           "id": "design-tokens",
-          "name": "Design tokens & component spec",
+          "name": "Design tokens \u0026 component spec",
           "depends_on": [
             "wireframe"
           ],
@@ -1924,7 +2480,7 @@
             "component-specification"
           ],
           "input": "Wireframe spec",
-          "output": "Design tokens JSON & component spec",
+          "output": "Design tokens JSON \u0026 component spec",
           "required_evidence": [
             "test"
           ]
@@ -1978,7 +2534,7 @@
             "visual-regression",
             "visual-qa"
           ],
-          "input": "UI components & snapshots",
+          "input": "UI components \u0026 snapshots",
           "output": "Visual QA sign-off",
           "required_evidence": [
             "screenshot",
@@ -1988,21 +2544,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
-      ],
-      "preconditions": [
-        "Product requirement or design spec available",
-        "Design system tokens accessible"
       ]
     },
     {
@@ -2017,11 +2558,6 @@
           "dashboard"
         ]
       },
-      "requires_skills_any": [
-        "ui-ux-review",
-        "accessibility",
-        "visual-regression"
-      ],
       "inputs": [
         "Rendered UI views",
         "Design tokens"
@@ -2044,6 +2580,17 @@
       "artifacts": [
         "UI review findings",
         "WCAG audit report"
+      ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
       ],
       "stop_conditions": [
         "UI review completed with prioritized findings"
@@ -2072,7 +2619,7 @@
           "skills": [
             "visual-qa"
           ],
-          "input": "Snapshots & interaction flows",
+          "input": "Snapshots \u0026 interaction flows",
           "output": "Ergonomics findings",
           "required_evidence": [
             "review"
@@ -2117,17 +2664,6 @@
             "review"
           ]
         }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
       ]
     },
     {
@@ -2142,10 +2678,6 @@
           "web-app"
         ]
       },
-      "requires_skills_any": [
-        "frontend-web",
-        "backend-api"
-      ],
       "inputs": [
         "Feature requirements",
         "API contract"
@@ -2172,6 +2704,17 @@
         "UI components",
         "Integration tests"
       ],
+      "fallbacks": [
+        {
+          "action": "retry_with_alternate_model",
+          "condition": "step_failed",
+          "max_retries": 2
+        },
+        {
+          "action": "escalate_to_human",
+          "condition": "gate_failed"
+        }
+      ],
       "stop_conditions": [
         "Fullstack feature verified with integration tests"
       ],
@@ -2185,7 +2728,7 @@
             "database-review"
           ],
           "input": "Feature requirement",
-          "output": "API contract & schema migration",
+          "output": "API contract \u0026 schema migration",
           "required_evidence": [
             "test"
           ]
@@ -2262,613 +2805,6 @@
           ],
           "gates": [
             "review"
-          ]
-        }
-      ],
-      "fallbacks": [
-        {
-          "condition": "step_failed",
-          "action": "retry_with_alternate_model",
-          "max_retries": 2
-        },
-        {
-          "condition": "gate_failed",
-          "action": "escalate_to_human"
-        }
-      ]
-    },
-    {
-      "id": "brand-creation",
-      "name": "Brand Creation & Identity System",
-      "version": 1,
-      "purpose": "End-to-end brand identity engineering: market positioning, aesthetic definition, vector logo marks, OKLCH color tokenization, typography systems, and brand guidelines manual.",
-      "select": {
-        "features_any": [
-          "branding",
-          "brand-identity",
-          "design-system",
-          "marketing"
-        ]
-      },
-      "requires_skills_any": [
-        "brand-identity",
-        "color-science",
-        "typography-system",
-        "svg-engineering"
-      ],
-      "inputs": [
-        "Brand brief & company charter",
-        "Target audience profile",
-        "Market positioning strategy"
-      ],
-      "agents": [
-        "creative-director",
-        "brand-designer",
-        "svg-artist",
-        "visual-identity-auditor"
-      ],
-      "skills": [
-        "aesthetic-analysis",
-        "visual-communication",
-        "brand-identity",
-        "color-science",
-        "typography-system",
-        "svg-engineering",
-        "design-critique"
-      ],
-      "gates": [
-        "brand-critique",
-        "contrast-audit",
-        "vector-conformance"
-      ],
-      "artifacts": [
-        "Brand Strategy & Positioning Spec",
-        "OKLCH Color Palette & Semantic Tokens",
-        "Fluid Typography Scale Spec",
-        "SVG Logo Family (Light, Dark, Monochrome)",
-        "Brand Guidelines Manual"
-      ],
-      "stop_conditions": [
-        "Brand guidelines and vector assets pass critique and contrast audits with zero violations"
-      ],
-      "steps": [
-        {
-          "id": "aesthetic-strategy",
-          "name": "Aesthetic Research & Semiotic Positioning",
-          "agent_role": "creative-director",
-          "skills": [
-            "aesthetic-analysis",
-            "visual-communication"
-          ],
-          "input": "Brand brief & company charter",
-          "output": "Aesthetic strategy & moodboard spec",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "color-foundation",
-          "name": "OKLCH Color Science & Accessible Palette Generation",
-          "agent_role": "brand-designer",
-          "skills": [
-            "color-science",
-            "brand-identity"
-          ],
-          "depends_on": [
-            "aesthetic-strategy"
-          ],
-          "input": "Aesthetic strategy",
-          "output": "OKLCH color palette tokens JSON",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "contrast-audit"
-          ]
-        },
-        {
-          "id": "typography-architecture",
-          "name": "Fluid Typography Hierarchy & Variable Fonts Spec",
-          "agent_role": "brand-designer",
-          "skills": [
-            "typography-system",
-            "brand-identity"
-          ],
-          "depends_on": [
-            "aesthetic-strategy"
-          ],
-          "input": "Aesthetic strategy",
-          "output": "Typography system tokens JSON",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "logo-engineering",
-          "name": "Mathematical SVG Vector Logo & Mark Crafting",
-          "agent_role": "svg-artist",
-          "skills": [
-            "svg-engineering"
-          ],
-          "depends_on": [
-            "color-foundation",
-            "typography-architecture"
-          ],
-          "input": "Brand tokens and aesthetic direction",
-          "output": "Responsive SVG logo pack",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "vector-conformance"
-          ]
-        },
-        {
-          "id": "guidelines-compilation",
-          "name": "Compile Formal Brand Identity Guidelines",
-          "agent_role": "brand-designer",
-          "skills": [
-            "brand-identity",
-            "visual-communication"
-          ],
-          "depends_on": [
-            "logo-engineering"
-          ],
-          "input": "Vector logo assets and token manifests",
-          "output": "Brand guidelines manual markdown",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "identity-audit",
-          "name": "Comprehensive Visual Identity & Multi-surface Audit",
-          "agent_role": "visual-identity-auditor",
-          "skills": [
-            "design-critique"
-          ],
-          "depends_on": [
-            "guidelines-compilation"
-          ],
-          "input": "Brand guidelines and vector assets",
-          "output": "Brand audit scorecard and sign-off",
-          "required_evidence": [
-            "review"
-          ],
-          "gates": [
-            "brand-critique"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "marketing-campaign",
-      "name": "Marketing & Advertising Campaign Pipeline",
-      "version": 1,
-      "purpose": "Execution pipeline for multi-channel marketing campaigns using the AIDA framework: value proposition, advertising creatives, landing view architecture, and conversion optimization.",
-      "select": {
-        "features_any": [
-          "marketing",
-          "advertising",
-          "growth",
-          "landing-page"
-        ]
-      },
-      "requires_skills_any": [
-        "advertising-design",
-        "marketing-collateral",
-        "layout-patterns",
-        "design-psychology"
-      ],
-      "inputs": [
-        "Campaign brief & core value proposition",
-        "Target channels & platform dimensions",
-        "Conversion goals & key performance indicators"
-      ],
-      "agents": [
-        "creative-director",
-        "advertising-designer",
-        "frontend-engineer",
-        "quality-reviewer"
-      ],
-      "skills": [
-        "advertising-design",
-        "marketing-collateral",
-        "layout-patterns",
-        "design-psychology",
-        "responsive-design",
-        "clean-code"
-      ],
-      "gates": [
-        "aida-evaluation",
-        "responsive-check",
-        "accessibility"
-      ],
-      "artifacts": [
-        "Campaign Creative Strategy Spec",
-        "Multi-format Ad Units (Social, Display, Banner)",
-        "Responsive Campaign Landing View",
-        "AIDA Conversion Audit Scorecard"
-      ],
-      "stop_conditions": [
-        "All ad creatives and landing view pass AIDA review, responsiveness audit, and WCAG accessibility standards"
-      ],
-      "steps": [
-        {
-          "id": "campaign-strategy",
-          "name": "AIDA Framing & Psychological Hook Strategy",
-          "agent_role": "creative-director",
-          "skills": [
-            "design-psychology",
-            "advertising-design"
-          ],
-          "input": "Campaign brief & value proposition",
-          "output": "Campaign strategy & copy matrix",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "ad-collateral",
-          "name": "Design Multi-Format Advertising Creatives",
-          "agent_role": "advertising-designer",
-          "skills": [
-            "advertising-design",
-            "marketing-collateral"
-          ],
-          "depends_on": [
-            "campaign-strategy"
-          ],
-          "input": "Campaign strategy & copy matrix",
-          "output": "Multi-format ad units (SVG, HTML5, CSS)",
-          "required_evidence": [
-            "review"
-          ],
-          "gates": [
-            "aida-evaluation"
-          ]
-        },
-        {
-          "id": "landing-architecture",
-          "name": "Layout Architecture & Cognitive Hierarchy",
-          "agent_role": "advertising-designer",
-          "skills": [
-            "layout-patterns",
-            "responsive-design"
-          ],
-          "depends_on": [
-            "campaign-strategy"
-          ],
-          "input": "Campaign strategy",
-          "output": "Landing page layout wireframe spec",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "landing-implementation",
-          "name": "Implement Responsive High-Conversion Landing View",
-          "agent_role": "frontend-engineer",
-          "skills": [
-            "responsive-design",
-            "clean-code"
-          ],
-          "depends_on": [
-            "ad-collateral",
-            "landing-architecture"
-          ],
-          "input": "Layout wireframe and creative assets",
-          "output": "Production-ready responsive landing view",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "responsive-check",
-            "accessibility"
-          ]
-        },
-        {
-          "id": "conversion-qa",
-          "name": "Full Campaign Quality & Conversion Review",
-          "agent_role": "quality-reviewer",
-          "skills": [
-            "clean-code"
-          ],
-          "depends_on": [
-            "landing-implementation"
-          ],
-          "input": "Landing view and creative assets",
-          "output": "Campaign launch readiness scorecard",
-          "required_evidence": [
-            "review"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "icon-library-creation",
-      "name": "Icon Library Engineering & Design System Integration",
-      "version": 1,
-      "purpose": "End-to-end icon library production pipeline: geometric grid standards, optical weight balance, SVG path optimization, accessibility metadata, and framework component generation.",
-      "select": {
-        "features_any": [
-          "iconography",
-          "design-system",
-          "svg",
-          "ui-components"
-        ]
-      },
-      "requires_skills_any": [
-        "svg-engineering",
-        "icon-system",
-        "design-tokens"
-      ],
-      "inputs": [
-        "Iconography taxonomy & functional requirements",
-        "Base pixel grid spec (e.g. 24x24 px, 2px stroke)",
-        "Target framework bindings (SVG, React, Vue, Web Components)"
-      ],
-      "agents": [
-        "svg-artist",
-        "design-system-engineer",
-        "accessibility-reviewer",
-        "tester"
-      ],
-      "skills": [
-        "svg-engineering",
-        "icon-system",
-        "design-tokens",
-        "generative-svg-art"
-      ],
-      "gates": [
-        "grid-conformance",
-        "path-optimization",
-        "a11y-audit"
-      ],
-      "artifacts": [
-        "Icon Pixel Grid & Optical Balance Specification",
-        "Optimized Scalable SVG Asset Bundle",
-        "Typed Component Wrapper Packages (React/Vue/Web Components)",
-        "Icon Metadata & Search Taxonomy Catalog JSON"
-      ],
-      "stop_conditions": [
-        "All icon glyphs strictly align to base grid, path data is normalized with zero redundant nodes, and accessibility metadata validates"
-      ],
-      "steps": [
-        {
-          "id": "grid-specification",
-          "name": "Establish Geometric Grid & Optical Alignment Keys",
-          "agent_role": "svg-artist",
-          "skills": [
-            "icon-system"
-          ],
-          "input": "Base pixel grid spec and design language",
-          "output": "Grid geometry and key shape guidelines",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "vector-crafting",
-          "name": "Vector Path Crafting & Optical Sizing",
-          "agent_role": "svg-artist",
-          "skills": [
-            "svg-engineering",
-            "icon-system"
-          ],
-          "depends_on": [
-            "grid-specification"
-          ],
-          "input": "Icon taxonomy and grid geometry",
-          "output": "Raw SVG vector icon glyphs",
-          "required_evidence": [
-            "review"
-          ],
-          "gates": [
-            "grid-conformance"
-          ]
-        },
-        {
-          "id": "path-optimization",
-          "name": "Path Simplification & SVGO Bytecode Optimization",
-          "agent_role": "svg-artist",
-          "skills": [
-            "svg-engineering"
-          ],
-          "depends_on": [
-            "vector-crafting"
-          ],
-          "input": "Raw SVG glyphs",
-          "output": "Normalized, zero-overhead SVG assets",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "path-optimization"
-          ]
-        },
-        {
-          "id": "component-packaging",
-          "name": "Package Typed UI Components & Token Integration",
-          "agent_role": "design-system-engineer",
-          "skills": [
-            "design-tokens",
-            "icon-system"
-          ],
-          "depends_on": [
-            "path-optimization"
-          ],
-          "input": "Optimized SVGs and design tokens",
-          "output": "Component packages & metadata catalog",
-          "required_evidence": [
-            "test"
-          ]
-        },
-        {
-          "id": "accessibility-audit",
-          "name": "Audit Accessibility & Multi-size Visual Conformance",
-          "agent_role": "accessibility-reviewer",
-          "skills": [
-            "icon-system"
-          ],
-          "depends_on": [
-            "component-packaging"
-          ],
-          "input": "Component packages and rendered test matrix",
-          "output": "Iconography a11y audit report",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "a11y-audit"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "design-system-foundation",
-      "name": "Design System Foundation Architecture",
-      "version": 1,
-      "purpose": "Comprehensive engineering of an enterprise design system: W3C DTCG tokens, perceptual color spaces, modular typography, atomic primitives, and automated accessibility verification.",
-      "select": {
-        "features_any": [
-          "design-system",
-          "tokens",
-          "ui-components",
-          "frontend"
-        ]
-      },
-      "requires_skills_any": [
-        "design-system",
-        "design-tokens",
-        "color-science",
-        "typography-system"
-      ],
-      "inputs": [
-        "Brand vision & aesthetic guidelines",
-        "Target technology stack & UI framework",
-        "Accessibility targets (WCAG 2.2 AA / AAA)"
-      ],
-      "agents": [
-        "creative-director",
-        "brand-designer",
-        "design-system-engineer",
-        "ui-component-engineer",
-        "accessibility-reviewer"
-      ],
-      "skills": [
-        "design-system",
-        "design-tokens",
-        "color-science",
-        "typography-system",
-        "component-specification",
-        "ui-implementation",
-        "visual-regression"
-      ],
-      "gates": [
-        "token-validation",
-        "component-test",
-        "wcag-aaa"
-      ],
-      "artifacts": [
-        "W3C DTCG Design Tokens Package (JSON/CSS/SCSS)",
-        "Core Atomic Component Library (Button, Input, Card, Modal)",
-        "Living Styleguide & Interactive Documentation",
-        "Comprehensive Accessibility & Conformance Report"
-      ],
-      "stop_conditions": [
-        "Tokens compile cleanly to all target formats, components pass 100% unit and visual tests, and accessibility audit completes with zero critical defects"
-      ],
-      "steps": [
-        {
-          "id": "token-architecture",
-          "name": "Define Multi-Tier W3C Design Tokens",
-          "agent_role": "design-system-engineer",
-          "skills": [
-            "design-tokens",
-            "color-science",
-            "typography-system"
-          ],
-          "input": "Brand aesthetic guidelines",
-          "output": "Global, semantic, and component tokens JSON",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "token-validation"
-          ]
-        },
-        {
-          "id": "primitive-specification",
-          "name": "Specify Atomic UI Component Contracts",
-          "agent_role": "design-system-engineer",
-          "skills": [
-            "component-specification",
-            "design-system"
-          ],
-          "depends_on": [
-            "token-architecture"
-          ],
-          "input": "Semantic tokens",
-          "output": "Component props, states, and variant specifications",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "component-implementation",
-          "name": "Build Headless / Accessible UI Component Primitives",
-          "agent_role": "ui-component-engineer",
-          "skills": [
-            "ui-implementation",
-            "clean-code"
-          ],
-          "depends_on": [
-            "primitive-specification"
-          ],
-          "input": "Component specifications and tokens",
-          "output": "Component source code and test suite",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "component-test"
-          ]
-        },
-        {
-          "id": "living-styleguide",
-          "name": "Author Living Styleguide & Documentation",
-          "agent_role": "creative-director",
-          "skills": [
-            "design-system",
-            "visual-communication"
-          ],
-          "depends_on": [
-            "component-implementation"
-          ],
-          "input": "Components and token manifests",
-          "output": "Interactive documentation website & playground",
-          "required_evidence": [
-            "review"
-          ]
-        },
-        {
-          "id": "accessibility-conformance",
-          "name": "Exhaustive WCAG & Keyboard Navigation Audit",
-          "agent_role": "accessibility-reviewer",
-          "skills": [
-            "visual-regression"
-          ],
-          "depends_on": [
-            "living-styleguide"
-          ],
-          "input": "Rendered components and documentation views",
-          "output": "WCAG conformance audit report",
-          "required_evidence": [
-            "test"
-          ],
-          "gates": [
-            "wcag-aaa"
           ]
         }
       ]

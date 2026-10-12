@@ -112,3 +112,128 @@ func TestExecuteRecipe_SuccessAndCompensation(t *testing.T) {
 		t.Error("expected compensation delete_tmp to be executed on step failure")
 	}
 }
+
+func TestFromManifest_SuccessAndExecution(t *testing.T) {
+	manifest := RecipeManifest{
+		ID:      "test-workflow",
+		Name:    "Test Workflow",
+		Purpose: "Demonstrate manifest conversion and DAG execution",
+		Steps: []ManifestStep{
+			{
+				ID:        "step-a",
+				Name:      "Step A (Root)",
+				AgentRole: "explorer",
+				Skills:    []string{"prumo-navigation"},
+			},
+			{
+				ID:        "step-b1",
+				Name:      "Step B1 (Parallel Branch 1)",
+				DependsOn: []string{"step-a"},
+				AgentRole: "implementer",
+				Skills:    []string{"clean-code"},
+			},
+			{
+				ID:        "step-b2",
+				Name:      "Step B2 (Parallel Branch 2)",
+				DependsOn: []string{"step-a"},
+				AgentRole: "tester",
+				Skills:    []string{"testing-quality"},
+			},
+			{
+				ID:        "step-c",
+				Name:      "Step C (Join)",
+				DependsOn: []string{"step-b1", "step-b2"},
+				AgentRole: "reviewer",
+				Skills:    []string{"code-review"},
+				Gates:     []string{"review"},
+			},
+		},
+	}
+
+	dag, err := FromManifest(manifest)
+	if err != nil {
+		t.Fatalf("FromManifest failed: %v", err)
+	}
+
+	if dag.ID != "test-workflow" {
+		t.Errorf("expected ID 'test-workflow', got %s", dag.ID)
+	}
+	if len(dag.Steps) != 4 {
+		t.Fatalf("expected 4 steps, got %d", len(dag.Steps))
+	}
+	if dag.Start != "step-a" {
+		t.Errorf("expected Start 'step-a', got %s", dag.Start)
+	}
+
+	executedOrder := []string{}
+	exec := NewExecutor()
+	exec.StepHook = func(step RecipeStep, state string, _ error) {
+		if state == "completed" {
+			executedOrder = append(executedOrder, step.ID)
+		}
+	}
+
+	err = exec.Execute(context.Background(), *dag)
+	if err != nil {
+		t.Fatalf("execution failed: %v", err)
+	}
+
+	if len(executedOrder) != 4 {
+		t.Fatalf("expected 4 executed steps, got %d: %v", len(executedOrder), executedOrder)
+	}
+	if executedOrder[0] != "step-a" {
+		t.Errorf("expected step-a to execute first, got %s", executedOrder[0])
+	}
+	if executedOrder[3] != "step-c" {
+		t.Errorf("expected step-c to execute last, got %s", executedOrder[3])
+	}
+}
+
+func TestFromManifest_CatalogRecipes(t *testing.T) {
+	catalogPath := "../../src/prumo/resources/catalog/recipes.json"
+	recipes, err := LoadCatalogRecipes(catalogPath)
+	if err != nil {
+		t.Fatalf("failed to load catalog recipes from %s: %v", catalogPath, err)
+	}
+
+	if len(recipes) == 0 {
+		t.Fatalf("expected at least 1 recipe in catalog, got 0")
+	}
+
+	for _, r := range recipes {
+		dag, err := FromManifest(r)
+		if err != nil {
+			t.Errorf("failed to convert catalog recipe %s to DAG: %v", r.ID, err)
+			continue
+		}
+		if dag.ID != r.ID {
+			t.Errorf("expected DAG ID %s, got %s", r.ID, dag.ID)
+		}
+		if len(dag.Steps) != len(r.Steps) {
+			t.Errorf("recipe %s: expected %d steps, got %d", r.ID, len(r.Steps), len(dag.Steps))
+		}
+	}
+}
+
+func TestExecuteRecipe_StrictMissingCapability(t *testing.T) {
+	dag := RecipeDAG{
+		ID:    "rec-strict",
+		Name:  "Strict Test",
+		Start: "step-1",
+		Steps: map[string]RecipeStep{
+			"step-1": {
+				ID:         "step-1",
+				Actor:      "agent-1",
+				Capability: "unknown-cap",
+			},
+		},
+	}
+
+	exec := NewExecutor()
+	exec.Strict = true
+
+	err := exec.Execute(context.Background(), dag)
+	if err == nil || !strings.Contains(err.Error(), "unregistered capability handler") {
+		t.Fatalf("expected unregistered capability error in strict mode, got: %v", err)
+	}
+}

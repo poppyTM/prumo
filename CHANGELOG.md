@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+- **Recipe DAG Engine & Deterministic Execution (GAP-134)**:
+  - Replaced linear `step.Next[0]` execution with true topological wave-based DAG execution in `internal/automation/recipe_dag.go`.
+  - Added parallel branch execution with barrier synchronization, strict capability evaluation, and manifest validation against `recipe.schema.json`.
+  - Added new native CLI command suite: `prumo recipe list`, `prumo recipe show <id>`, `prumo recipe scaffold <id>`, `prumo recipe compile-doc <id>`, `prumo recipe pack`, `prumo recipe run <id>`, and integrated runtime execution flag `prumo run --recipe <id>`.
+  - Verified and executed all 20 canonical catalog recipes with 0 DAG or dependency errors.
+- **Native Document Generation Suite**:
+  - `prumo docs adr new <title>`: Automatically increments 3-digit ADR numbers, creates slugified template files, and updates `docs/AUTHORITY_MAP.json`.
+  - `prumo docs adr list`: Lists all Architectural Decision Records.
+  - `prumo docs scaffold-brief <contract-id>`: Scaffolds human documentation briefs directly from documentation contracts.
+  - `prumo docs generate-workforce`: Generates canonical documentation (`docs/workforce/recipes.md`, `agents.md`, `skills.md`) from the catalog.
+- **Workforce Lifecycle Modernization (GAP-147)**:
+  - Full Skill Package v3 and Agent v2 scaffolding in Go: `prumo workforce scaffold <skill|agent>` generating complete package skeletons (`manifest.json`, `SKILL.md`/`AGENT.md`, `checks/`, `references/`, `templates/`, `scripts/verify.sh`, `examples/`).
+  - Added `prumo workforce inspect <skill|agent|recipe>` to inspect contract definitions from filesystem or catalog.
+  - Added `prumo workforce lint` running `team.LintSkillContract` and `team.LintAgentContract` across all skills and agents.
+  - Resolved GAP-147 in `workforcesync`: downloads and synchronizes complete package directory trees, computes recursive SHA-256 directory digests (`packages.DirectoryChecksum`) for `prumo.lock`, and adds support for synchronizing agents and recipes.
+  - Fixed case-insensitivity in `internal/harness/team/linter.go` to support `SKILL.md`.
+  - Enforced `AGENT.md` and `RECIPE.md` existence checks in `cliops.ValidateWorkforce`.
+  - Cleaned up deprecated legacy Python scripts (`scripts/scaffold_advanced_workforce.py`, `scripts/create_p0_skills.py`).
+
 ## 0.6.1 — Prumo Code Agent & Deterministic Audit Telemetry
 
 - **Prumo Code Agent (Terminal User Interface)**:
