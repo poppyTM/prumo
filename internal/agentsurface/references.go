@@ -219,6 +219,19 @@ func validateReference(root string, index *SourceIndex, r Reference) string {
 				continue
 			}
 			if !index.HasProductionWord(token) {
+				if strings.Contains(token, "-") {
+					parts := strings.Split(token, "-")
+					allParts := true
+					for _, p := range parts {
+						if p != "" && !index.HasProductionWord(p) {
+							allParts = false
+							break
+						}
+					}
+					if allParts {
+						continue
+					}
+				}
 				return "subcommand " + token + " is not implemented in cmd/ or internal/"
 			}
 		}
