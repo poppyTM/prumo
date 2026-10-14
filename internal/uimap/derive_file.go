@@ -5,7 +5,10 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"os"
 	"path/filepath"
+	"regexp"
+	"strings"
 )
 
 // readGoFile returns what a source file declares, qualified by directory as
@@ -109,4 +112,31 @@ func receiverName(d *ast.FuncDecl) string {
 		}
 	}
 	return ""
+}
+
+var (
+	tsExportDecl = regexp.MustCompile(`(?m)^\s*export\s+(?:async\s+)?(?:default\s+)?(?:function|const|class|interface|type|enum)\s+([A-Za-z0-9_$]+)`)
+)
+
+// readTypeScriptFile reads exported TypeScript/JavaScript declarations.
+func readTypeScriptFile(path, dir string) (fileDecls, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return fileDecls{}, fmt.Errorf("uimap: read %s: %w", path, err)
+	}
+	prefix := filepath.Base(dir)
+	if dir == "." || dir == "" {
+		prefix = strings.TrimSuffix(filepath.Base(path), filepath.Ext(path))
+	}
+	var decls fileDecls
+	matches := tsExportDecl.FindAllStringSubmatch(string(data), -1)
+	for _, m := range matches {
+		if len(m) > 1 && m[1] != "" {
+			name := m[1]
+			qualified := prefix + "." + name
+			decls.Symbols = append(decls.Symbols, qualified)
+			decls.Elements = append(decls.Elements, qualified)
+		}
+	}
+	return decls, nil
 }

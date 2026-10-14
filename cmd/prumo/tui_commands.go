@@ -53,10 +53,13 @@ func tuiBinary() (string, error) {
 	if fromEnv := strings.TrimSpace(os.Getenv("PRUMO_AGENT_BIN")); fromEnv != "" {
 		return fromEnv, nil
 	}
+	if fromEnv := strings.TrimSpace(os.Getenv("PRUMO_CODER_BIN")); fromEnv != "" {
+		return fromEnv, nil
+	}
 	if fromEnv := strings.TrimSpace(os.Getenv("PRUMO_TUI_BIN")); fromEnv != "" {
 		return fromEnv, nil
 	}
-	for _, name := range []string{"prumo-tui", "pa", "prumo-agent", "prumo-agent-tui"} {
+	for _, name := range []string{"prumo-coder", "prumo-tui", "pa", "prumo-agent", "prumo-agent-tui"} {
 		if exe, err := os.Executable(); err == nil {
 			sibling := filepath.Join(filepath.Dir(exe), name)
 			if _, err := os.Stat(sibling); err == nil {
@@ -67,5 +70,5 @@ func tuiBinary() (string, error) {
 			return path, nil
 		}
 	}
-	return "", fmt.Errorf("the terminal client is a separate binary: install `prumo-tui` (or `pa` / `prumo-agent`), or set PRUMO_AGENT_BIN (protocol %s)", protocol.CLIVersion)
+	return "", fmt.Errorf("the terminal client is a separate binary: install `prumo-coder` / `prumo-tui` (or `pa` / `prumo-agent`), or set PRUMO_AGENT_BIN (protocol %s)", protocol.CLIVersion)
 }

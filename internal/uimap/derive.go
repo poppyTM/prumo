@@ -78,16 +78,21 @@ func (GoSymbolDeriver) Derive(root string, patterns []string) (Derived, error) {
 				continue
 			}
 			// Tests are not the interface. Reading them would let a map point at
-			// a symbol that only exists under `go test`, and it offered test
+			// a symbol that only exists under tests, and it offered test
 			// functions as elements the moment the scope included them.
-			if strings.HasSuffix(path, "_test.go") {
+			if strings.HasSuffix(path, "_test.go") || strings.HasSuffix(path, ".test.ts") || strings.HasSuffix(path, ".test.tsx") || strings.HasSuffix(path, ".spec.ts") || strings.HasSuffix(path, ".spec.tsx") {
 				continue
 			}
 			rel, err := filepath.Rel(root, path)
 			if err != nil {
 				rel = path
 			}
-			decls, err := readGoFile(path, filepath.Dir(rel))
+			var decls fileDecls
+			if strings.HasSuffix(path, ".go") {
+				decls, err = readGoFile(path, filepath.Dir(rel))
+			} else if strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".tsx") || strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".jsx") {
+				decls, err = readTypeScriptFile(path, filepath.Dir(rel))
+			}
 			if err != nil {
 				return Derived{}, err
 			}
@@ -141,8 +146,8 @@ func (r *SymbolResolver) Resolves(symbol, path string) bool {
 		return true
 	}
 	// Accept the fallback form as well: a lot of interfaces are named by
-	// receiver and method without the package.
-	if strings.Count(symbol, ".") == 1 {
+	// receiver and method without the package, or bare component name.
+	if strings.Count(symbol, ".") <= 1 {
 		for candidate := range r.known {
 			if strings.HasSuffix(candidate, "."+symbol) {
 				return true

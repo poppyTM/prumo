@@ -49,7 +49,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/util/errorcopy_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -79,7 +79,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/spec_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       },
@@ -109,7 +109,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/util/errorcopy_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       }
@@ -158,7 +158,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/theme/contrast_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -188,7 +188,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/theme/contrast_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -209,7 +209,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/theme/contrast_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       }
@@ -243,7 +243,7 @@
     "claims": [
       {
         "id": "CLAIM-A11YFOCUS-VISIBILITY",
-        "statement": "The focused surface is marked by a **glyph** as well as a colour: the composer's border is heavy (`━`) while it holds the keyboard and light (`─`) while a layer is over it, so the marker survives a terminal without colour. `TestTheComposerShowsWhetherItHoldsTheKeyboard` asserts both directions, and the `default` frame in `prumo-tui`'s golden set captures it.",
+        "statement": "The focused surface is marked by a **glyph** as well as a colour: the composer's border is heavy (`━`) while it holds the keyboard and light (`─`) while a layer is over it, so the marker survives a terminal without colour. `TestTheComposerShowsWhetherItHoldsTheKeyboard` asserts both directions, and the `default` frame in `prumo-coder`'s test set captures it.",
         "status": "accepted",
         "authority": "canonical-documentation",
         "revision": 1,
@@ -267,7 +267,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/keymap_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       },
@@ -297,7 +297,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/keymap_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       },
@@ -376,7 +376,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/keymap_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       },
@@ -406,7 +406,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/keymap_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       },
@@ -436,7 +436,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/keymap_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       }
@@ -504,7 +504,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/motion_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       }
@@ -583,7 +583,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/headless/headless_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -1820,7 +1820,7 @@
       },
       {
         "id": "CLAIM-UICOMPONENTS-TRACE",
-        "statement": "Every element a user operates or sees names an implementation symbol, and `prumo ui verify` resolves each one against the sources the map declares (`prumo-tui/**/*.go`); an element that is described but not built must instead declare `not-implemented` with a reason. The map therefore cannot describe an interface that does not exist, which is the state this obligation spent its life in.",
+        "statement": "Every element a user operates or sees names an implementation symbol, and `prumo ui verify` resolves each one against the sources the map declares (`packages/prumo-coder/src/**/*.{ts,tsx}`); an element that is described but not built must instead declare `not-implemented` with a reason. The map therefore cannot describe an interface that does not exist, which is the state this obligation spent its life in.",
         "status": "accepted",
         "authority": "canonical-documentation",
         "revision": 1,
@@ -2351,7 +2351,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/config/config_test.go"
+            "artifact": "packages/client-core/tests/store.test.ts"
           }
         ]
       },
@@ -2381,7 +2381,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/config/config_test.go"
+            "artifact": "packages/client-core/tests/store.test.ts"
           }
         ]
       },
@@ -2423,7 +2423,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/config/config_test.go"
+            "artifact": "packages/client-core/tests/store.test.ts"
           },
           {
             "id": "EV-PERSO-INVALID-THEME",
@@ -2432,7 +2432,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/theme_wiring_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -2531,7 +2531,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/runtime/attach_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -2561,7 +2561,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/spec_test.go"
+            "artifact": "packages/prumo-coder/tests/composer.test.tsx"
           }
         ]
       }
@@ -2843,7 +2843,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/theme/contrast_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       },
@@ -2873,7 +2873,7 @@
             "revision": "1",
             "producer": "prumo-maintained",
             "verified": true,
-            "artifact": "prumo-tui/internal/tui/motion_test.go"
+            "artifact": "packages/prumo-coder/tests/render.test.tsx"
           }
         ]
       }

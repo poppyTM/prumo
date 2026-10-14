@@ -59,7 +59,7 @@ func hasProductionImporter(t *testing.T, root, wantPkg string) bool {
 		}
 		if info.IsDir() {
 			name := info.Name()
-			if name == ".git" || name == "prumo-viewer" || name == "prumo-tui" {
+			if name == ".git" || name == "prumo-viewer" || name == "prumo-tui" || name == "node_modules" {
 				return filepath.SkipDir
 			}
 			return nil

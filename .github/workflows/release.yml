@@ -20,11 +20,9 @@ jobs:
           # go.mod asked for anyway; that fallback is gone, and a stale pin
           # would break every release build rather than one CI job.
           go-version-file: go.mod
-      - uses: dtolnay/rust-toolchain@stable
-      - name: Install Linux build dependencies for Agent IDE
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev libgl1-mesa-dev libx11-dev libx11-xcb-dev libxkbcommon-dev
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - name: Build release artifacts
         run: VERSION="${GITHUB_REF_NAME#v}" sh scripts/release.sh
       - name: Upload release

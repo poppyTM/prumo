@@ -10,7 +10,8 @@
   "tokens_source": "docs/ui-ux/design-tokens.json",
   "derivation": {
     "sources": [
-      "prumo-tui/**/*.go"
+      "packages/prumo-coder/src/**/*.ts",
+      "packages/prumo-coder/src/**/*.tsx"
     ],
     "mode": "verify-only"
   },
@@ -41,8 +42,8 @@
         "token:color.surface"
       ],
       "implementation": {
-        "symbol": "tui.New",
-        "path": "prumo-tui/internal/tui/tui.go",
+        "symbol": "app.App",
+        "path": "packages/prumo-coder/src/app.tsx",
         "status": "implemented"
       },
       "children": [
@@ -85,8 +86,8 @@
                 "token:color.text"
               ],
               "implementation": {
-                "symbol": "page.NewChatPage",
-                "path": "prumo-tui/internal/tui/page/chat.go",
+                "symbol": "ui.TabBar",
+                "path": "packages/prumo-coder/src/ui/TabBar.tsx",
                 "status": "implemented"
               }
             }
@@ -135,8 +136,8 @@
                 "token:color.panel"
               ],
               "implementation": {
-                "symbol": "page.NewChatPage",
-                "path": "prumo-tui/internal/tui/page/chat.go",
+                "symbol": "ui.Transcript",
+                "path": "packages/prumo-coder/src/ui/Transcript.tsx",
                 "status": "implemented"
               },
               "children": [
@@ -178,8 +179,8 @@
                     "ctrl+d"
                   ],
                   "implementation": {
-                    "symbol": "chat.NewMessagesCmp",
-                    "path": "prumo-tui/internal/tui/components/chat/list.go",
+                    "symbol": "ui.Transcript",
+                    "path": "packages/prumo-coder/src/ui/Transcript.tsx",
                     "status": "implemented"
                   },
                   "children": [
@@ -208,8 +209,8 @@
                         "token:color.text-muted"
                       ],
                       "implementation": {
-                        "symbol": "message.Message",
-                        "path": "prumo-tui/internal/message/message.go",
+                        "symbol": "ui.Transcript",
+                        "path": "packages/prumo-coder/src/ui/Transcript.tsx",
                         "status": "implemented"
                       }
                     },
@@ -237,8 +238,8 @@
                         "token:color.accent"
                       ],
                       "implementation": {
-                        "symbol": "agent.AgentEvent",
-                        "path": "prumo-tui/internal/agent/agent.go",
+                        "symbol": "ui.Transcript",
+                        "path": "packages/prumo-coder/src/ui/Transcript.tsx",
                         "status": "implemented"
                       }
                     }
@@ -276,8 +277,8 @@
                     "paste"
                   ],
                   "implementation": {
-                    "symbol": "chat.NewEditorCmp",
-                    "path": "prumo-tui/internal/tui/components/chat/editor.go",
+                    "symbol": "ui.Composer",
+                    "path": "packages/prumo-coder/src/ui/Composer.tsx",
                     "status": "implemented"
                   }
                 },
@@ -305,8 +306,8 @@
                     "token:color.text-muted"
                   ],
                   "implementation": {
-                    "symbol": "chat.NewMessagesCmp",
-                    "path": "prumo-tui/internal/tui/components/chat/list.go",
+                    "symbol": "ui.Transcript",
+                    "path": "packages/prumo-coder/src/ui/Transcript.tsx",
                     "status": "implemented"
                   }
                 },
@@ -354,8 +355,8 @@
                     "ctrl+b"
                   ],
                   "implementation": {
-                    "symbol": "chat.NewSidebarCmp",
-                    "path": "prumo-tui/internal/tui/components/chat/sidebar.go",
+                    "symbol": "ui.Sidebar",
+                    "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                     "status": "implemented"
                   },
                   "children": [
@@ -383,8 +384,8 @@
                         "token:color.text-muted"
                       ],
                       "implementation": {
-                        "symbol": "chat.NewSidebarCmp",
-                        "path": "prumo-tui/internal/tui/components/chat/sidebar.go",
+                        "symbol": "ui.Sidebar",
+                        "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                         "status": "implemented"
                       }
                     },
@@ -413,8 +414,8 @@
                         "token:color.accent"
                       ],
                       "implementation": {
-                        "symbol": "chat.NewSidebarCmp",
-                        "path": "prumo-tui/internal/tui/components/chat/sidebar.go",
+                        "symbol": "ui.Sidebar",
+                        "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                         "status": "implemented"
                       }
                     },
@@ -453,8 +454,8 @@
                         "space"
                       ],
                       "implementation": {
-                        "symbol": "goals.ReadWorkspace",
-                        "path": "prumo-tui/internal/goals/goals.go",
+                        "symbol": "ui.Sidebar",
+                        "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                         "status": "implemented"
                       }
                     },
@@ -482,8 +483,8 @@
                         "token:color.text-muted"
                       ],
                       "implementation": {
-                        "symbol": "chat.NewSidebarCmp",
-                        "path": "prumo-tui/internal/tui/components/chat/sidebar.go",
+                        "symbol": "ui.Sidebar",
+                        "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                         "status": "implemented"
                       }
                     },
@@ -512,8 +513,8 @@
                         "token:color.text-muted"
                       ],
                       "implementation": {
-                        "symbol": "chat.NewSidebarCmp",
-                        "path": "prumo-tui/internal/tui/components/chat/sidebar.go",
+                        "symbol": "ui.Sidebar",
+                        "path": "packages/prumo-coder/src/ui/Sidebar.tsx",
                         "status": "implemented"
                       }
                     }
@@ -547,8 +548,8 @@
                 "token:color.panel"
               ],
               "implementation": {
-                "symbol": "page.NewLogsPage",
-                "path": "prumo-tui/internal/tui/page/logs.go",
+                "symbol": "ui.RightSidebar",
+                "path": "packages/prumo-coder/src/ui/RightSidebar.tsx",
                 "status": "implemented"
               },
               "children": [
@@ -579,8 +580,8 @@
                     "token:color.text"
                   ],
                   "implementation": {
-                    "symbol": "logs.NewLogsTable",
-                    "path": "prumo-tui/internal/tui/components/logs/table.go",
+                    "symbol": "ui.RightSidebar",
+                    "path": "packages/prumo-coder/src/ui/RightSidebar.tsx",
                     "status": "implemented"
                   }
                 },
@@ -606,8 +607,8 @@
                     "token:color.text-muted"
                   ],
                   "implementation": {
-                    "symbol": "logs.NewLogsDetails",
-                    "path": "prumo-tui/internal/tui/components/logs/details.go",
+                    "symbol": "ui.RightSidebar",
+                    "path": "packages/prumo-coder/src/ui/RightSidebar.tsx",
                     "status": "implemented"
                   }
                 }
@@ -644,8 +645,8 @@
             "token:color.text-muted"
           ],
           "implementation": {
-            "symbol": "core.NewStatusCmp",
-            "path": "prumo-tui/internal/tui/components/core/status.go",
+            "symbol": "ui.StatusLine",
+            "path": "packages/prumo-coder/src/ui/StatusLine.tsx",
             "status": "implemented"
           },
           "children": [
@@ -672,8 +673,8 @@
                 "token:color.text"
               ],
               "implementation": {
-                "symbol": "session.Session",
-                "path": "prumo-tui/internal/session/session.go",
+                "symbol": "ui.StatusLine",
+                "path": "packages/prumo-coder/src/ui/StatusLine.tsx",
                 "status": "implemented"
               }
             },
@@ -701,8 +702,8 @@
                 "token:color.text"
               ],
               "implementation": {
-                "symbol": "runtime.Runner.Changes",
-                "path": "prumo-tui/internal/runtime/runner.go",
+                "symbol": "ui.StatusLine",
+                "path": "packages/prumo-coder/src/ui/StatusLine.tsx",
                 "status": "implemented"
               }
             },
@@ -731,8 +732,8 @@
                 "token:color.error"
               ],
               "implementation": {
-                "symbol": "util.InfoMsg",
-                "path": "prumo-tui/internal/tui/util/util.go",
+                "symbol": "ui.StatusLine",
+                "path": "packages/prumo-coder/src/ui/StatusLine.tsx",
                 "status": "implemented"
               }
             }
@@ -770,8 +771,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewCommandDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/commands.go",
+            "symbol": "ui.CommandPaletteModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -808,8 +809,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewSessionDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/session.go",
+            "symbol": "ui.TabBar",
+            "path": "packages/prumo-coder/src/ui/TabBar.tsx",
             "status": "implemented"
           }
         },
@@ -847,8 +848,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewModelDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/models.go",
+            "symbol": "ui.ModelPickerModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -883,8 +884,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewThemeDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/theme.go",
+            "symbol": "ui.ThemePickerModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -920,8 +921,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewFilepickerCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/filepicker.go",
+            "symbol": "ui.QuickFileModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -956,8 +957,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewCompletionDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/complete.go",
+            "symbol": "ui.Composer",
+            "path": "packages/prumo-coder/src/ui/Composer.tsx",
             "status": "implemented"
           }
         },
@@ -994,8 +995,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewPermissionDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/permission.go",
+            "symbol": "ui.PermissionDialog",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -1027,8 +1028,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewQuitCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/quit.go",
+            "symbol": "ui.DirtyDialog",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -1063,8 +1064,8 @@
             "down"
           ],
           "implementation": {
-            "symbol": "dialog.NewHelpCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/help.go",
+            "symbol": "ui.HelpModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -1096,8 +1097,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewInitDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/init.go",
+            "symbol": "ui.Composer",
+            "path": "packages/prumo-coder/src/ui/Composer.tsx",
             "status": "implemented"
           }
         },
@@ -1133,8 +1134,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewFilesDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/files.go",
+            "symbol": "ui.FileViewerModal",
+            "path": "packages/prumo-coder/src/ui/Modals.tsx",
             "status": "implemented"
           }
         },
@@ -1171,8 +1172,8 @@
             "esc"
           ],
           "implementation": {
-            "symbol": "dialog.NewJobsDialogCmp",
-            "path": "prumo-tui/internal/tui/components/dialog/jobs.go",
+            "symbol": "ui.RightSidebar",
+            "path": "packages/prumo-coder/src/ui/RightSidebar.tsx",
             "status": "implemented"
           }
         }

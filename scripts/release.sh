@@ -23,30 +23,21 @@ for target in $targets; do
   GOOS="$os" GOARCH="$arch" CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o "$OUTPUT/$cli_name" ./cmd/prumo
   cp "$OUTPUT/$cli_name" "$OUTPUT/$legacy_name"
 
-  # 2. Prumo Agent TUI
-  tui_name="prumo-agent-tui-${os}-${arch}${ext}"
-  echo "building $tui_name"
-  (cd prumo-tui && GOOS="$os" GOARCH="$arch" CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o "../$OUTPUT/$tui_name" ./cmd/prumo-tui)
 done
 
-# 3. Prumo Agent IDE (Desktop GUI)
-if command -v cargo >/dev/null 2>&1; then
-  host_os="$(uname -s | tr '[:upper:]' '[:lower:]')"
-  host_arch="$(uname -m)"
-  case "$host_arch" in
-    x86_64) host_arch="amd64" ;;
-    aarch64) host_arch="arm64" ;;
-  esac
-  ext=""
-  if [ "$host_os" = "windows" ] || [ "${OS:-}" = "Windows_NT" ]; then
-    ext=".exe"
+# 2. Prumo Coder TUI (OpenTUI + SolidJS)
+if command -v bun >/dev/null 2>&1; then
+  echo "building prumo-coder"
+  (cd packages/prumo-coder && bun run build)
+  if [ -f "packages/prumo-coder/dist/prumo-coder.js" ]; then
+    cp packages/prumo-coder/dist/prumo-coder.js "$OUTPUT/prumo-coder.js"
   fi
-  ide_name="prumo-agent-ide-${host_os}-${host_arch}${ext}"
-  echo "packaging $ide_name"
-  if [ ! -f "prumo-viewer/target/release/prumo-native${ext}" ]; then
-    (cd prumo-viewer && cargo build --release --bin prumo-native)
-  fi
-  cp "prumo-viewer/target/release/prumo-native${ext}" "$OUTPUT/$ide_name"
+fi
+
+# 3. Prumo Coder IDE (Electron + Bun + SolidJS)
+if command -v bun >/dev/null 2>&1 && [ -d "packages/prumo-coder-ide" ]; then
+  echo "building prumo-coder-ide"
+  (cd packages/prumo-coder-ide && bun run build 2>/dev/null || true)
 fi
 
 (cd "$OUTPUT" && sha256sum prumo-* > checksums.txt)

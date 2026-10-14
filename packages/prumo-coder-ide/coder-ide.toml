@@ -1,0 +1,20 @@
+[window]
+width = 1400
+height = 900
+titlebar_style = "custom"
+
+[editor]
+font_family = "JetBrains Mono"
+font_size = 13.5
+line_height = 1.45
+word_wrap = false
+tab_size = 2
+
+[theme]
+name = "zed-dark"
+ui_density = "compact"
+icon_pack = "phosphor"
+
+[terminal]
+font_size = 13.0
+shell = "/bin/bash"
