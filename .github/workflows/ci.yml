@@ -78,7 +78,9 @@ jobs:
         with:
           bun-version: latest
       - name: Install dependencies
-        run: bun install --frozen-lockfile || bun install
+        run: bun install
+      - name: Build client-core
+        run: cd packages/client-core && bun run build
       - name: Test client-core
         run: cd packages/client-core && bun test
       - name: Typecheck client-core

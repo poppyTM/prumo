@@ -4,6 +4,9 @@
   "description": "Living documentation website for Prumo Framework & Engineering Harness",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
