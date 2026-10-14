@@ -1,0 +1,21 @@
+[general]
+theme = "catppuccin-mocha"
+reduced_motion = false
+vim_navigation = true
+nerd_fonts = true
+
+[workspace]
+auto_stash_dirty = false
+preflight_check = true
+
+[agent]
+default_provider = "anthropic"
+default_model = "claude-3-7-sonnet"
+reasoning_effort = "high"
+max_turns = 30
+
+[keymap]
+leader = "ctrl+x"
+editor = "ctrl+e"
+files = "ctrl+g"
+models = "ctrl+o"

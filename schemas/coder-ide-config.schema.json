@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/raillen/prumo/main/schemas/coder-ide-config.schema.json",
+  "title": "Prumo Coder IDE Desktop Configuration",
+  "description": "Schema for prumo-coder-IDE TOML configuration file (coder-ide.toml)",
+  "type": "object",
+  "properties": {
+    "window": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "default": 1400
+        },
+        "height": {
+          "type": "integer",
+          "default": 900
+        },
+        "titlebar_style": {
+          "type": "string",
+          "enum": ["custom", "native", "hidden"],
+          "default": "custom"
+        }
+      },
+      "additionalProperties": false
+    },
+    "editor": {
+      "type": "object",
+      "properties": {
+        "font_family": {
+          "type": "string",
+          "default": "JetBrains Mono"
+        },
+        "font_size": {
+          "type": "number",
+          "default": 13.5
+        },
+        "line_height": {
+          "type": "number",
+          "default": 1.45
+        },
+        "word_wrap": {
+          "type": "boolean",
+          "default": false
+        },
+        "tab_size": {
+          "type": "integer",
+          "default": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "zed-dark"
+        },
+        "ui_density": {
+          "type": "string",
+          "enum": ["compact", "comfortable"],
+          "default": "compact"
+        },
+        "icon_pack": {
+          "type": "string",
+          "default": "phosphor"
+        }
+      },
+      "additionalProperties": false
+    },
+    "terminal": {
+      "type": "object",
+      "properties": {
+        "font_size": {
+          "type": "number",
+          "default": 13.0
+        },
+        "shell": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

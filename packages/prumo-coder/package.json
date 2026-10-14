@@ -1,0 +1,27 @@
+{
+  "name": "prumo-coder",
+  "version": "0.1.0",
+  "description": "Terminal coding agent surface for Prumo powered by OpenTUI and SolidJS",
+  "type": "module",
+  "bin": {
+    "prumo-coder": "./src/index.tsx"
+  },
+  "scripts": {
+    "start": "bun run src/cli.tsx",
+    "build": "bun run scripts/build.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.6.1",
+    "@opentui/keymap": "^0.6.1",
+    "@opentui/solid": "^0.6.1",
+    "@prumo/client-core": "workspace:*",
+    "shiki": "^4.5.0",
+    "solid-js": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "bun-types": "^1.4.3",
+    "typescript": "^5.7.3"
+  }
+}

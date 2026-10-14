@@ -56,6 +56,9 @@ func runNative(asJSON bool, args []string) int {
 
 func resolveNativeBinary() (string, []string, error) {
 	// 1. Explicit environment variable
+	if fromEnv := strings.TrimSpace(os.Getenv("PRUMO_IDE_BIN")); fromEnv != "" {
+		return fromEnv, nil, nil
+	}
 	if fromEnv := strings.TrimSpace(os.Getenv("PRUMO_NATIVE_BIN")); fromEnv != "" {
 		return fromEnv, nil, nil
 	}
@@ -66,7 +69,7 @@ func resolveNativeBinary() (string, []string, error) {
 	// 2. Sibling binary in executable directory
 	if exe, err := os.Executable(); err == nil {
 		exeDir := filepath.Dir(exe)
-		for _, name := range []string{"prumo-native", "prumo-viewer"} {
+		for _, name := range []string{"prumo-coder-ide", "prumo-ide", "prumo-native", "prumo-viewer"} {
 			sibling := filepath.Join(exeDir, name)
 			if _, err := os.Stat(sibling); err == nil {
 				return sibling, nil, nil
@@ -77,6 +80,13 @@ func resolveNativeBinary() (string, []string, error) {
 	// 3. Local build target in repository
 	root := repoRoot()
 	if root != "" {
+		idePkg := filepath.Join(root, "packages", "prumo-coder-ide", "package.json")
+		if _, err := os.Stat(idePkg); err == nil {
+			if bunPath, err := exec.LookPath("bun"); err == nil {
+				return bunPath, []string{"--cwd", filepath.Join(root, "packages", "prumo-coder-ide"), "run", "dev", "--"}, nil
+			}
+		}
+
 		targetRelease := filepath.Join(root, "prumo-viewer", "target", "release", "prumo-native")
 		if _, err := os.Stat(targetRelease); err == nil {
 			return targetRelease, nil, nil
@@ -85,22 +95,14 @@ func resolveNativeBinary() (string, []string, error) {
 		if _, err := os.Stat(targetDebug); err == nil {
 			return targetDebug, nil, nil
 		}
-
-		// If cargo is available and source manifest exists, fall back to cargo run
-		cargoToml := filepath.Join(root, "prumo-viewer", "Cargo.toml")
-		if _, err := os.Stat(cargoToml); err == nil {
-			if cargoPath, err := exec.LookPath("cargo"); err == nil {
-				return cargoPath, []string{"run", "--manifest-path", cargoToml, "--"}, nil
-			}
-		}
 	}
 
 	// 4. System PATH lookup
-	for _, name := range []string{"prumo-native", "prumo-viewer"} {
+	for _, name := range []string{"prumo-coder-ide", "prumo-ide", "prumo-native", "prumo-viewer"} {
 		if path, err := exec.LookPath(name); err == nil {
 			return path, nil, nil
 		}
 	}
 
-	return "", nil, fmt.Errorf("the native workspace viewer is a separate binary: build `prumo-viewer` (producing `prumo-native`), or set PRUMO_NATIVE_BIN (protocol %s)", protocol.CLIVersion)
+	return "", nil, fmt.Errorf("the native workspace viewer is a separate binary: build `prumo-coder-ide` / `prumo-viewer` (producing `prumo-ide` / `prumo-native`), or set PRUMO_NATIVE_BIN (protocol %s)", protocol.CLIVersion)
 }

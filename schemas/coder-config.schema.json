@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/raillen/prumo/main/schemas/coder-config.schema.json",
+  "title": "Prumo Coder TUI Configuration",
+  "description": "Schema for prumo-coder TOML configuration file (coder.toml)",
+  "type": "object",
+  "properties": {
+    "general": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "default": "catppuccin-mocha"
+        },
+        "reduced_motion": {
+          "type": "boolean",
+          "default": false
+        },
+        "vim_navigation": {
+          "type": "boolean",
+          "default": true
+        },
+        "nerd_fonts": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "workspace": {
+      "type": "object",
+      "properties": {
+        "auto_stash_dirty": {
+          "type": "boolean",
+          "default": false
+        },
+        "preflight_check": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "default_provider": {
+          "type": "string"
+        },
+        "default_model": {
+          "type": "string"
+        },
+        "reasoning_effort": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "max"]
+        },
+        "max_turns": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 30
+        }
+      },
+      "additionalProperties": false
+    },
+    "keymap": {
+      "type": "object",
+      "properties": {
+        "leader": {
+          "type": "string",
+          "default": "ctrl+x"
+        },
+        "editor": {
+          "type": "string",
+          "default": "ctrl+e"
+        },
+        "files": {
+          "type": "string",
+          "default": "ctrl+g"
+        },
+        "models": {
+          "type": "string",
+          "default": "ctrl+o"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

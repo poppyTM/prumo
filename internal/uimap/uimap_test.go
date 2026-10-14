@@ -247,6 +247,35 @@ func TestSomethingView(t *testing.T) {}
 	}
 }
 
+func TestTypeScriptDeriverFindsExportsAndSkipsTests(t *testing.T) {
+	root := t.TempDir()
+	write(t, filepath.Join(root, "src", "ui", "Composer.tsx"), `
+export interface ComposerProps { title: string; }
+export const SLASH_COMMANDS = [];
+export function Composer(props: ComposerProps) { return null; }
+export default function DefaultComp() { return null; }
+`)
+	write(t, filepath.Join(root, "src", "ui", "Composer.test.tsx"), `
+export function TestComposer() {}
+`)
+	derived, err := GoSymbolDeriver{}.Derive(root, []string{"src/ui/**/*.tsx"})
+	if err != nil {
+		t.Fatalf("derive: %v", err)
+	}
+	set := derived.SymbolSet()
+	for _, want := range []string{"ui.Composer", "ui.SLASH_COMMANDS", "ui.ComposerProps"} {
+		if !set[want] {
+			t.Errorf("deriver missed %s; got %v", want, derived.Symbols)
+		}
+	}
+	if set["ui.TestComposer"] || set["TestComposer"] {
+		t.Error("the deriver read a test file; tests are not the interface")
+	}
+	if len(derived.Sources) != 1 {
+		t.Errorf("read %d sources, want 1: %v", len(derived.Sources), derived.Sources)
+	}
+}
+
 func TestMergePrefersDeclarationAndOnlyOffersElements(t *testing.T) {
 	derived := Derived{
 		Sources:  []string{"ui/shell.go"},
